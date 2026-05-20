@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>WebEx Calling Data Collection</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:13px}
+
+/* Topbar */
+#topbar{background:#1e3a5f;color:#fff;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:54px;flex-shrink:0}
+.brand{display:flex;align-items:center;gap:10px}
+.brand-icon{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px}
+.brand-title{font-weight:600;font-size:14px}
+.brand-sub{font-size:10px;opacity:.65;margin-top:1px}
+.top-actions{display:flex;gap:8px}
+.btn{padding:6px 14px;border-radius:7px;border:none;cursor:pointer;font-size:12px;font-weight:600;transition:all .2s}
+.btn-outline{border:1.5px solid rgba(255,255,255,.4);background:transparent;color:#fff}
+.btn-outline:hover{background:rgba(255,255,255,.1)}
+.btn-blue{background:#3b82f6;color:#fff}
+.btn-blue:hover{background:#2563eb}
+.btn-green{background:#16a34a;color:#fff}
+.btn-green:hover{background:#15803d}
+.btn-success{background:#22c55e!important}
+.btn-danger{background:transparent;border:none;color:#ef4444;cursor:pointer;font-size:11px;padding:2px 6px}
+.btn-danger:hover{color:#dc2626}
+.btn-add{background:#2563eb;color:#fff;border:none;padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer}
+.btn-add:hover{background:#1d4ed8}
+.btn-export{background:transparent;border:1.5px solid #d1d5db;color:#374151;padding:6px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer}
+.btn-export:hover{background:#f3f4f6}
+
+/* Layout */
+#layout{display:flex;flex:1;overflow:hidden}
+
+/* Sidebar */
+#sidebar{width:195px;background:#fff;border-right:1px solid #e5e7eb;overflow-y:auto;flex-shrink:0}
+.sidebar-group{padding:10px 8px 4px;font-size:9px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.08em}
+.nav-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:7px;margin:1px 6px;cursor:pointer;transition:all .15s;border:1.5px solid transparent}
+.nav-item:hover{background:#f9fafb}
+.nav-item.active{background:#eff6ff;border-color:#bfdbfe}
+.nav-item .nav-label{font-size:12px;font-weight:500;color:#374151;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nav-item.active .nav-label{color:#1d4ed8;font-weight:600}
+.nav-badge{font-size:10px;background:#e5e7eb;color:#6b7280;border-radius:10px;padding:1px 6px;font-weight:600;min-width:20px;text-align:center}
+.nav-item.active .nav-badge{background:#dbeafe;color:#2563eb}
+
+/* Main */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* Sheet header */
+.sheet-header{background:#fff;border-bottom:1px solid #e5e7eb;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.sheet-title{font-size:15px;font-weight:700;color:#111827}
+.sheet-desc{font-size:11px;color:#6b7280;margin-top:2px}
+.sheet-actions{display:flex;gap:8px;align-items:center}
+
+/* Content */
+#content{flex:1;overflow-y:auto;padding:20px 24px}
+
+/* Form card */
+.form-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:16px;overflow:hidden}
+.form-card-header{background:#f8fafc;border-bottom:1px solid #e5e7eb;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.form-card-title{font-size:12px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.05em}
+.form-card-body{padding:16px}
+
+/* Grid layouts */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px 16px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px 16px}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px 16px}
+
+/* Field */
+.field label{display:block;font-size:10px;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.field input,.field select,.field textarea{width:100%;border:1px solid #d1d5db;border-radius:7px;padding:7px 9px;font-size:12px;outline:none;background:#fff;font-family:inherit;color:#111827;transition:border-color .15s,box-shadow .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+.field textarea{min-height:60px;resize:vertical}
+
+/* Key press table */
+.key-table{width:100%;border-collapse:collapse;font-size:11px}
+.key-table th{background:#f8fafc;border:1px solid #e5e7eb;padding:5px 8px;font-weight:700;color:#6b7280;text-align:left;font-size:10px;text-transform:uppercase}
+.key-table td{border:1px solid #e5e7eb;padding:4px 6px}
+.key-table td input,.key-table td select{width:100%;border:none;border-radius:4px;padding:4px 6px;font-size:11px;background:#f9fafb;outline:none;font-family:inherit}
+.key-table td input:focus,.key-table td select:focus{background:#fff;box-shadow:0 0 0 2px rgba(59,130,246,.2)}
+.key-badge-sm{width:22px;height:22px;border-radius:50%;background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;font-weight:700;font-size:11px;display:inline-flex;align-items:center;justify-content:center}
+
+/* Agents */
+.agents-area{display:flex;flex-direction:column;gap:6px}
+.agent-row{display:flex;gap:8px;align-items:center}
+.agent-row input{flex:1;border:1px solid #d1d5db;border-radius:6px;padding:6px 8px;font-size:12px;outline:none}
+.agent-row input:focus{border-color:#3b82f6;box-shadow:0 0 0 2px rgba(59,130,246,.12)}
+.btn-icon{width:26px;height:26px;border:none;border-radius:5px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.btn-icon-add{background:#eff6ff;color:#2563eb}
+.btn-icon-add:hover{background:#dbeafe}
+.btn-icon-rem{background:#fef2f2;color:#ef4444}
+.btn-icon-rem:hover{background:#fee2e2}
+.add-agent-btn{background:#f0f9ff;border:1.5px dashed #93c5fd;color:#2563eb;padding:6px 12px;border-radius:7px;font-size:11px;font-weight:600;cursor:pointer;width:100%;margin-top:4px}
+.add-agent-btn:hover{background:#dbeafe}
+
+/* Data table */
+.data-table-wrap{background:#fff;border:1px solid #e5e7eb;border-radius:10px;overflow:hidden}
+.data-table-header{background:#f8fafc;border-bottom:1px solid #e5e7eb;padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.data-table-title{font-size:12px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.05em}
+.data-table{width:100%;border-collapse:collapse;font-size:11px}
+.data-table th{background:#f9fafb;border-bottom:1px solid #e5e7eb;padding:8px 12px;font-weight:700;color:#6b7280;text-align:left;white-space:nowrap}
+.data-table td{border-bottom:1px solid #f3f4f6;padding:7px 12px;color:#374151;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:#f9fafb}
+.empty-msg{text-align:center;color:#9ca3af;font-size:12px;padding:24px;font-style:italic}
+.rec-count{font-size:11px;color:#6b7280;font-weight:600}
+
+/* Section divider */
+.section-divider{font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;margin:14px 0 8px;display:flex;align-items:center;gap:8px}
+.section-divider::after{content:'';flex:1;height:1px;background:#e5e7eb}
+
+/* Scrollable sheet panels */
+.sheet-panel{display:none}
+.sheet-panel.active{display:block}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="brand">
+    <div class="brand-icon">📞</div>
+    <div>
+      <div class="brand-title">WebEx Calling Data Collection</div>
+      <div class="brand-sub">V5 Template</div>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button class="btn btn-outline" onclick="document.getElementById('import-input').click()">⬆ Import CSV(s)</button>
+    <button class="btn btn-outline" onclick="exportAll()">⬇ Export All CSVs</button>
+    <button class="btn btn-outline" onclick="clearAll()" title="Clear all in-browser data">🗑 Clear</button>
+    <input type="file" id="import-input" accept=".csv" multiple style="display:none" onchange="handleImport(event)"/>
+  </div>
+</div>
+
+<!-- Toast notifications -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;background:#1e3a5f;color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.18);display:none;z-index:9999;max-width:380px"></div>
+
+<!-- Cross-reference datalists (populated dynamically) -->
+<datalist id="dl-locations"></datalist>
+<datalist id="dl-phones"></datalist>
+<datalist id="dl-users"></datalist>
+<datalist id="dl-workspaces"></datalist>
+<datalist id="dl-users-workspaces"></datalist>
+<datalist id="dl-huntgroups"></datalist>
+
+<div id="layout">
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <div class="sidebar-group">Infrastructure</div>
+    <div class="nav-item active" onclick="switchSheet('location',this)">
+      <span class="nav-label">📍 Location</span>
+      <span class="nav-badge" id="badge-location">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('phoneNumbers',this)">
+      <span class="nav-label">📋 Phone Numbers</span>
+      <span class="nav-badge" id="badge-phoneNumbers">0</span>
+    </div>
+    <div class="sidebar-group">Users & Devices</div>
+    <div class="nav-item" onclick="switchSheet('users',this)">
+      <span class="nav-label">👤 Webex Users</span>
+      <span class="nav-badge" id="badge-users">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('userDevices',this)">
+      <span class="nav-label">📱 User Devices</span>
+      <span class="nav-badge" id="badge-userDevices">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('workspaceDevices',this)">
+      <span class="nav-label">🖥 Workspace Devices</span>
+      <span class="nav-badge" id="badge-workspaceDevices">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('virtualLines',this)">
+      <span class="nav-label">🔗 Virtual Lines</span>
+      <span class="nav-badge" id="badge-virtualLines">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('analogDevices',this)">
+      <span class="nav-label">📟 Analog Devices</span>
+      <span class="nav-badge" id="badge-analogDevices">0</span>
+    </div>
+    <div class="sidebar-group">Features</div>
+    <div class="nav-item" onclick="switchSheet('huntGroup',this)">
+      <span class="nav-label">🔎 Hunt Group</span>
+      <span class="nav-badge" id="badge-huntGroup">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('autoAttendant',this)">
+      <span class="nav-label">🤖 Auto Attendant</span>
+      <span class="nav-badge" id="badge-autoAttendant">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('callParkExt',this)">
+      <span class="nav-label">🅿 Call Park Ext.</span>
+      <span class="nav-badge" id="badge-callParkExt">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('callParkGroup',this)">
+      <span class="nav-label">🅿 Call Park Group</span>
+      <span class="nav-badge" id="badge-callParkGroup">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('callPickup',this)">
+      <span class="nav-label">📞 Call Pickup</span>
+      <span class="nav-badge" id="badge-callPickup">0</span>
+    </div>
+    <div class="nav-item" onclick="switchSheet('paging',this)">
+      <span class="nav-label">📢 Paging</span>
+      <span class="nav-badge" id="badge-paging">0</span>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+    <div id="sheet-header">
+      <div class="sheet-header">
+        <div>
+          <div class="sheet-title" id="sh-title">Location</div>
+          <div class="sheet-desc" id="sh-desc">Site and location configuration</div>
+        </div>
+        <div class="sheet-actions">
+          <span class="rec-count" id="sh-count">0 records</span>
+          <button class="btn-export" id="sh-export-btn" onclick="exportCurrent()">⬇ Export CSV</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="content">
+
+      <!-- ==================== LOCATION ==================== -->
+      <div class="sheet-panel active" id="panel-location">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Location</span></div>
+          <div class="form-card-body">
+            <div class="grid-4">
+              <div class="field"><label>Name *</label><input id="loc-name" placeholder="Smallville"/></div>
+              <div class="field"><label>Main Number</label><input id="loc-main" placeholder="4075551234"/></div>
+              <div class="field"><label>Emergency Callback #</label><input id="loc-ecbn" placeholder="4075551234"/></div>
+              <div class="field"><label>Emergency Notify Email</label><input id="loc-email" placeholder="911@email.com"/></div>
+            </div>
+            <div class="grid-4" style="margin-top:10px">
+              <div class="field"><label>Address</label><input id="loc-addr" placeholder="123 Somewhere Ave"/></div>
+              <div class="field"><label>City</label><input id="loc-city" placeholder="Smallville"/></div>
+              <div class="field"><label>State</label><input id="loc-state" placeholder="OH"/></div>
+              <div class="field"><label>Zip</label><input id="loc-zip" placeholder="32556"/></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('location')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Locations</span></div>
+          <div id="tbl-location"><p class="empty-msg">No records yet. Fill out the form above and click "Add to Table".</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== PHONE NUMBERS ==================== -->
+      <div class="sheet-panel" id="panel-phoneNumbers">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Phone Number</span></div>
+          <div class="form-card-body">
+            <div class="grid-2">
+              <div class="field"><label>Number *</label><input id="pn-number" placeholder="4075551234"/></div>
+              <div class="field"><label>Location</label><input id="pn-location" placeholder="ORLANDO" list="dl-locations"/></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('phoneNumbers')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Phone Numbers</span></div>
+          <div id="tbl-phoneNumbers"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== WEBEX USERS ==================== -->
+      <div class="sheet-panel" id="panel-users">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Webex User</span></div>
+          <div class="form-card-body">
+            <div class="section-divider">Identity</div>
+            <div class="grid-4">
+              <div class="field"><label>First Name *</label><input id="u-first" placeholder="John"/></div>
+              <div class="field"><label>Last Name *</label><input id="u-last" placeholder="Doe"/></div>
+              <div class="field"><label>Display Name</label><input id="u-display" placeholder="John Doe"/></div>
+              <div class="field"><label>User ID / Email *</label><input id="u-email" placeholder="john@company.com"/></div>
+            </div>
+            <div class="section-divider">Calling</div>
+            <div class="grid-4">
+              <div class="field"><label>Extension</label><input id="u-ext" placeholder="5001"/></div>
+              <div class="field"><label>Phone Number</label><input id="u-phone" placeholder="4075551234" list="dl-phones"/></div>
+              <div class="field"><label>Mobile Number</label><input id="u-mobile" placeholder="3214567890"/></div>
+              <div class="field"><label>Caller ID Number</label><input id="u-callerid" placeholder="4078881212"/></div>
+            </div>
+            <div class="section-divider">Location</div>
+            <div class="grid-4">
+              <div class="field"><label>Location</label><input id="u-location" placeholder="Main Office" list="dl-locations"/></div>
+              <div class="field"><label>City</label><input id="u-city" placeholder="Hollywood"/></div>
+              <div class="field"><label>Address</label><input id="u-addr" placeholder="100 Universal City Plaza"/></div>
+              <div class="field"><label>Zip / Postal Code</label><input id="u-zip" placeholder="91608"/></div>
+            </div>
+            <div class="grid-4" style="margin-top:10px">
+              <div class="field"><label>State / Province</label><input id="u-state" placeholder="California"/></div>
+              <div class="field"><label>Country</label><input id="u-country" placeholder="US"/></div>
+              <div class="field"><label>Custom Caller ID Name</label><input id="u-cidname" placeholder="John Doe Personal"/></div>
+              <div class="field"><label>Emergency Callback #</label>
+                <select id="u-ecbn"><option>DIRECT_LINE</option><option>LOCATION_ECBN</option></select>
+              </div>
+            </div>
+            <div class="section-divider">Features</div>
+            <div class="grid-4">
+              <div class="field"><label>Voicemail Enabled</label>
+                <select id="u-vm"><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Call Recording Enabled</label>
+                <select id="u-rec"><option>FALSE</option><option>TRUE</option></select></div>
+              <div class="field"><label>Hoteling Enabled</label>
+                <select id="u-hotel"><option>FALSE</option><option>TRUE</option></select></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('users')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Webex Users</span></div>
+          <div id="tbl-users"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== USER DEVICES ==================== -->
+      <div class="sheet-panel" id="panel-userDevices">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add User Device</span></div>
+          <div class="form-card-body">
+            <div class="grid-3">
+              <div class="field"><label>Username (Email) *</label><input id="ud-user" placeholder="archer1@farms.com" list="dl-users"/></div>
+              <div class="field"><label>Type</label>
+                <select id="ud-type"><option>USER</option><option>WORKSPACE</option></select></div>
+              <div class="field"><label>Device Type</label>
+                <select id="ud-devtype"><option>IP</option><option>ANALOG</option></select></div>
+            </div>
+            <div class="grid-3" style="margin-top:10px">
+              <div class="field"><label>Model</label><input id="ud-model" placeholder="Cisco 8865"/></div>
+              <div class="field"><label>MAC Address</label><input id="ud-mac" placeholder="AB0971FA2967"/></div>
+              <div class="field"><label>Location</label><input id="ud-loc" placeholder="Dallas Office" list="dl-locations"/></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('userDevices')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">User Devices</span></div>
+          <div id="tbl-userDevices"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== WORKSPACE DEVICES ==================== -->
+      <div class="sheet-panel" id="panel-workspaceDevices">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Workspace Device</span></div>
+          <div class="form-card-body">
+            <div class="grid-4">
+              <div class="field"><label>Workspace Name *</label><input id="wd-user" placeholder="Breakroom"/></div>
+              <div class="field"><label>Type</label>
+                <select id="wd-type"><option>WORKSPACE</option></select></div>
+              <div class="field"><label>Extension</label><input id="wd-ext" placeholder="5555"/></div>
+              <div class="field"><label>Phone Number</label><input id="wd-phone" placeholder="4075551234" list="dl-phones"/></div>
+            </div>
+            <div class="grid-4" style="margin-top:10px">
+              <div class="field"><label>Device Type</label>
+                <select id="wd-devtype"><option>IP</option><option>ANALOG</option></select></div>
+              <div class="field"><label>Model</label><input id="wd-model" placeholder="Cisco 8865"/></div>
+              <div class="field"><label>MAC Address</label><input id="wd-mac" placeholder="AB0971FA2967"/></div>
+              <div class="field"><label>Location</label><input id="wd-loc" placeholder="Dallas Office" list="dl-locations"/></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('workspaceDevices')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Workspace Devices</span></div>
+          <div id="tbl-workspaceDevices"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== VIRTUAL LINES ==================== -->
+      <div class="sheet-panel" id="panel-virtualLines">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Virtual Line</span></div>
+          <div class="form-card-body">
+            <div class="grid-3">
+              <div class="field"><label>First Name *</label><input id="vl-first" placeholder="IT"/></div>
+              <div class="field"><label>Last Name</label><input id="vl-last" placeholder="Help Desk"/></div>
+              <div class="field"><label>Display Name</label><input id="vl-display" placeholder="IT Helpdesk"/></div>
+            </div>
+            <div class="grid-3" style="margin-top:10px">
+              <div class="field"><label>Location</label><input id="vl-loc" placeholder="Seattle" list="dl-locations"/></div>
+              <div class="field"><label>Phone Number</label><input id="vl-phone" placeholder="14085550103" list="dl-phones"/></div>
+              <div class="field"><label>Extension</label><input id="vl-ext" placeholder="4103"/></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('virtualLines')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Virtual Lines</span></div>
+          <div id="tbl-virtualLines"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== ANALOG DEVICES ==================== -->
+      <div class="sheet-panel" id="panel-analogDevices">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Analog Device</span></div>
+          <div class="form-card-body">
+            <div class="grid-4">
+              <div class="field"><label>Description</label><input id="ad-desc" placeholder="Front Desk Fax"/></div>
+              <div class="field"><label>Directory Number</label><input id="ad-dn" placeholder="1001"/></div>
+              <div class="field"><label>Phone Number</label><input id="ad-phone" placeholder="4075551234" list="dl-phones"/></div>
+              <div class="field"><label>Location</label><input id="ad-loc" placeholder="HQ" list="dl-locations"/></div>
+            </div>
+            <div class="grid-3" style="margin-top:10px">
+              <div class="field"><label>Device Type</label>
+                <select id="ad-type"><option>ATA</option><option>FAX</option><option>PHONE</option><option>OTHER</option></select></div>
+              <div class="field"><label>MAC Address</label><input id="ad-mac" placeholder="AA:BB:CC:DD:EE:FF"/></div>
+              <div class="field"><label>Port Number</label><input id="ad-port" placeholder="1"/></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('analogDevices')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Analog Devices</span></div>
+          <div id="tbl-analogDevices"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== HUNT GROUP ==================== -->
+      <div class="sheet-panel" id="panel-huntGroup">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Hunt Group</span></div>
+          <div class="form-card-body">
+            <div class="section-divider">Basic</div>
+            <div class="grid-4">
+              <div class="field"><label>Name *</label><input id="hg-name" placeholder="HR DEPT HUNTGROUP"/></div>
+              <div class="field"><label>Phone Number</label><input id="hg-phone" placeholder="4078743451" list="dl-phones"/></div>
+              <div class="field"><label>Extension</label><input id="hg-ext" placeholder="3451"/></div>
+              <div class="field"><label>Location</label><input id="hg-loc" placeholder="Headquarters" list="dl-locations"/></div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <div class="field"><label>Call Routing Pattern</label>
+                <select id="hg-pattern">
+                  <option>UNIFORM</option><option>CIRCULAR</option><option>REGULAR</option><option>WEIGHTED</option><option>SIMULTANEOUS</option>
+                </select>
+              </div>
+              <div class="field"><label>Agent Action</label>
+                <select id="hg-agentaction"><option>ADD</option><option>REMOVE</option></select></div>
+            </div>
+            <div class="section-divider">Forwarding & Divert</div>
+            <div class="grid-4">
+              <div class="field"><label>Fwd After Rings VM Enable</label>
+                <select id="hg-farmve"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Forward Number</label><input id="hg-fwdnum" placeholder=""/></div>
+              <div class="field"><label>Advance After Rings Enable</label>
+                <select id="hg-aarne"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Advance After # Rings</label><input id="hg-aar" placeholder=""/></div>
+            </div>
+            <div class="grid-4" style="margin-top:10px">
+              <div class="field"><label>Advance When Busy Enable</label>
+                <select id="hg-awbe"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Fwd After Rings Enable</label>
+                <select id="hg-fare"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Forward After Rings</label><input id="hg-far" placeholder=""/></div>
+              <div class="field"><label>Forward Number 2</label><input id="hg-fwdnum2" placeholder=""/></div>
+            </div>
+            <div class="grid-4" style="margin-top:10px">
+              <div class="field"><label>Hunt Group Busy Enable</label>
+                <select id="hg-hgbe"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Divert When Busy Enable</label>
+                <select id="hg-dwbe"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Divert When Busy Number</label><input id="hg-dwbn" placeholder=""/></div>
+              <div class="field"><label>Divert Busy VM Enable</label>
+                <select id="hg-dbvme"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <div class="field"><label>Divert When Unreachable Enable</label>
+                <select id="hg-dwue"><option></option><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>Divert When Unreachable Number</label><input id="hg-dwun" placeholder=""/></div>
+            </div>
+            <div class="section-divider">Agents (Email IDs)</div>
+            <div class="agents-area" id="hg-agents"></div>
+            <button class="add-agent-btn" onclick="addAgentRow('hg-agents')">+ Add Agent</button>
+            <div style="margin-top:14px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('huntGroup')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Hunt Groups</span></div>
+          <div id="tbl-huntGroup"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== AUTO ATTENDANT ==================== -->
+      <div class="sheet-panel" id="panel-autoAttendant">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Auto Attendant</span></div>
+          <div class="form-card-body">
+            <div class="section-divider">Basic</div>
+            <div class="grid-4">
+              <div class="field"><label>Name *</label><input id="aa-name" placeholder="Main Menu"/></div>
+              <div class="field"><label>Phone Number</label><input id="aa-phone" placeholder="4075895441" list="dl-phones"/></div>
+              <div class="field"><label>Extension</label><input id="aa-ext" placeholder="4535"/></div>
+              <div class="field"><label>Location</label><input id="aa-loc" placeholder="HQ" list="dl-locations"/></div>
+            </div>
+            <div class="grid-4" style="margin-top:10px">
+              <div class="field"><label>Business Schedule</label><input id="aa-bsched" placeholder="Business Hours 1"/></div>
+              <div class="field"><label>Holiday Schedule</label><input id="aa-hsched" placeholder="Holidays"/></div>
+              <div class="field"><label>Alternate Number 1</label><input id="aa-alt1" placeholder=""/></div>
+              <div class="field"><label>Alternate Number 2</label><input id="aa-alt2" placeholder=""/></div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <div class="field"><label>Business Hours Menu Extension Enabled</label>
+                <select id="aa-bme"><option>TRUE</option><option>FALSE</option></select></div>
+              <div class="field"><label>After Hours Menu Extension Enabled</label>
+                <select id="aa-ahme"><option>FALSE</option><option>TRUE</option></select></div>
+            </div>
+
+            <div class="section-divider">Business Hours Greeting</div>
+            <div class="grid-2">
+              <div class="field"><label>Greeting Type</label>
+                <select id="aa-bgt"><option>CUSTOM</option><option>DEFAULT</option><option>SYSTEM_DEFAULT</option></select></div>
+              <div class="field"><label>Announcement Name</label><input id="aa-ban" placeholder="MainMenuOptions.wav"/></div>
+            </div>
+
+            <div class="section-divider">After Hours Greeting</div>
+            <div class="grid-3">
+              <div class="field"><label>Greeting Type</label>
+                <select id="aa-ahgt"><option>CUSTOM</option><option>DEFAULT</option><option>SYSTEM_DEFAULT</option></select></div>
+              <div class="field"><label>Announcement Name</label><input id="aa-ahan" placeholder="AfterHoursMenu.wav"/></div>
+              <div class="field"><label>Media Type</label>
+                <select id="aa-ahamt"><option>WAV</option><option>MP3</option></select></div>
+            </div>
+
+            <div class="section-divider">Business Hours Call Treatment</div>
+            <div class="grid-4">
+              <div class="field"><label>Retry (No Input)</label>
+                <select id="aa-bret"><option>NO_REPEAT</option><option>ONE_TIME</option><option>TWO_TIMES</option><option>THREE_TIMES</option></select></div>
+              <div class="field"><label>No Input Timer (sec)</label><input id="aa-btimer" placeholder="10"/></div>
+              <div class="field"><label>Action</label>
+                <select id="aa-bact">
+                  <option>PLAY_MESSAGE_AND_DISCONNECT</option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option>
+                  <option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>DISCONNECT</option>
+                </select></div>
+              <div class="field"><label>Greeting Type</label>
+                <select id="aa-bcgt"><option>CUSTOM</option><option>DEFAULT</option><option>SYSTEM_DEFAULT</option></select></div>
+            </div>
+
+            <div class="section-divider">After Hours Call Treatment</div>
+            <div class="grid-4">
+              <div class="field"><label>Retry (No Input)</label>
+                <select id="aa-ahret"><option>NO_REPEAT</option><option>ONE_TIME</option><option>TWO_TIMES</option><option>THREE_TIMES</option></select></div>
+              <div class="field"><label>No Input Timer (sec)</label><input id="aa-ahtimer" placeholder="10"/></div>
+              <div class="field"><label>Action</label>
+                <select id="aa-ahact">
+                  <option>PLAY_MESSAGE_AND_DISCONNECT</option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option>
+                  <option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>DISCONNECT</option>
+                </select></div>
+              <div class="field"><label>Greeting Type</label>
+                <select id="aa-ahcgt"><option>CUSTOM</option><option>DEFAULT</option><option>SYSTEM_DEFAULT</option></select></div>
+            </div>
+
+            <div class="section-divider">Business Hours Key Press Menu</div>
+            <div style="overflow-x:auto">
+              <table class="key-table" id="aa-bkeys"></table>
+            </div>
+
+            <div class="section-divider">After Hours Key Press Menu</div>
+            <div style="overflow-x:auto">
+              <table class="key-table" id="aa-ahkeys"></table>
+            </div>
+
+            <div style="margin-top:14px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('autoAttendant')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Auto Attendants</span></div>
+          <div id="tbl-autoAttendant"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== CALL PARK EXTENSION ==================== -->
+      <div class="sheet-panel" id="panel-callParkExt">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Call Park Extension</span></div>
+          <div class="form-card-body">
+            <div class="grid-3">
+              <div class="field"><label>Location</label><input id="cpe-loc" placeholder="ORLANDO" list="dl-locations"/></div>
+              <div class="field"><label>Call Park Extension Name *</label><input id="cpe-name" placeholder="Front Desk Line 1"/></div>
+              <div class="field"><label>Extension</label><input id="cpe-ext" placeholder="1001"/></div>
+            </div>
+            <div style="margin-top:12px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('callParkExt')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Call Park Extensions</span></div>
+          <div id="tbl-callParkExt"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== CALL PARK GROUP ==================== -->
+      <div class="sheet-panel" id="panel-callParkGroup">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Call Park Group</span></div>
+          <div class="form-card-body">
+            <div class="grid-4">
+              <div class="field"><label>Call Park Name *</label><input id="cpg-name" placeholder="Csv_CallPark_A"/></div>
+              <div class="field"><label>Location Name</label><input id="cpg-loc" placeholder="ORLANDO" list="dl-locations"/></div>
+              <div class="field"><label>Recall To</label>
+                <select id="cpg-recall">
+                  <option>ALERT PARKING USER ONLY</option><option>ALERT PARKING USER FIRST THEN HUNT GROUP</option>
+                </select></div>
+              <div class="field"><label>Hunt Group Name</label><input id="cpg-hg" placeholder="" list="dl-huntgroups"/></div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <div class="field"><label>Member Action</label>
+                <select id="cpg-action"><option>ADD</option><option>REMOVE</option></select></div>
+            </div>
+            <div class="section-divider">Members (Email or Workspace Name)</div>
+            <div class="agents-area" id="cpg-agents"></div>
+            <button class="add-agent-btn" onclick="addAgentRow('cpg-agents')">+ Add Member</button>
+            <div style="margin-top:14px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('callParkGroup')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Call Park Groups</span></div>
+          <div id="tbl-callParkGroup"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== CALL PICKUP ==================== -->
+      <div class="sheet-panel" id="panel-callPickup">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Call Pickup Group</span></div>
+          <div class="form-card-body">
+            <div class="grid-4">
+              <div class="field"><label>Name *</label><input id="cp-name" placeholder="Csv_Callpickup_A"/></div>
+              <div class="field"><label>Location</label><input id="cp-loc" placeholder="ORLANDO" list="dl-locations"/></div>
+              <div class="field"><label>Notification Type</label>
+                <select id="cp-notif"><option>VISUAL</option><option>AUDIO</option><option>BOTH</option><option>NONE</option></select></div>
+              <div class="field"><label>Notification Delay (sec)</label><input id="cp-delay" placeholder="6"/></div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <div class="field"><label>Agent Action</label>
+                <select id="cp-action"><option>ADD</option><option>REMOVE</option></select></div>
+            </div>
+            <div class="section-divider">Members (Email or Workspace Name)</div>
+            <div class="agents-area" id="cp-agents"></div>
+            <button class="add-agent-btn" onclick="addAgentRow('cp-agents')">+ Add Member</button>
+            <div style="margin-top:14px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('callPickup')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Call Pickup Groups</span></div>
+          <div id="tbl-callPickup"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+      <!-- ==================== PAGING ==================== -->
+      <div class="sheet-panel" id="panel-paging">
+        <div class="form-card">
+          <div class="form-card-header"><span class="form-card-title">Add Paging Group</span></div>
+          <div class="form-card-body">
+            <div class="grid-4">
+              <div class="field"><label>Location</label><input id="pg-loc" placeholder="HQ" list="dl-locations"/></div>
+              <div class="field"><label>Paging Group Name *</label><input id="pg-name" placeholder="Front Door"/></div>
+              <div class="field"><label>Phone Number</label><input id="pg-phone" placeholder="" list="dl-phones"/></div>
+              <div class="field"><label>Extension</label><input id="pg-ext" placeholder="6500"/></div>
+            </div>
+            <div class="grid-2" style="margin-top:10px">
+              <div class="field"><label>Calling ID Label</label><input id="pg-label" placeholder="Page Originator"/></div>
+            </div>
+            <div class="section-divider">Paging Targets</div>
+            <div class="agents-area" id="pg-targets"></div>
+            <button class="add-agent-btn" onclick="addAgentRow('pg-targets')">+ Add Target</button>
+            <div class="section-divider" style="margin-top:14px">Paging Originators</div>
+            <div class="agents-area" id="pg-origins"></div>
+            <button class="add-agent-btn" onclick="addAgentRow('pg-origins')">+ Add Originator</button>
+            <div style="margin-top:14px;display:flex;justify-content:flex-end">
+              <button class="btn-add" onclick="addRecord('paging')">+ Add to Table</button>
+            </div>
+          </div>
+        </div>
+        <div class="data-table-wrap">
+          <div class="data-table-header"><span class="data-table-title">Paging Groups</span></div>
+          <div id="tbl-paging"><p class="empty-msg">No records yet.</p></div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main -->
+</div><!-- /layout -->
+
+<script>
+// ======================== STATE ========================
+const DB = {
+  location:[],phoneNumbers:[],users:[],userDevices:[],workspaceDevices:[],
+  virtualLines:[],analogDevices:[],huntGroup:[],autoAttendant:[],
+  callParkExt:[],callParkGroup:[],callPickup:[],paging:[]
+};
+
+const SHEET_META = {
+  location:      {title:'Location',           desc:'Site and location configuration'},
+  phoneNumbers:  {title:'Phone Numbers',       desc:"Current phone lines (DID's)"},
+  users:         {title:'Webex Users',         desc:'User accounts and calling configuration'},
+  userDevices:   {title:'Webex User Devices',  desc:'Device assignments for users'},
+  workspaceDevices:{title:'Webex Workspace Devices', desc:'Device assignments for workspaces'},
+  virtualLines:  {title:'Virtual Lines (Shared Lines)', desc:'Virtual line / shared line configuration'},
+  analogDevices: {title:'Analog Devices',      desc:'Analog phones, faxes and ATAs'},
+  huntGroup:     {title:'Hunt Group',          desc:'Hunt group pilot numbers and member configuration'},
+  autoAttendant: {title:'Auto Attendant',      desc:'Auto attendant menus and key press routing'},
+  callParkExt:   {title:'Call Park Extension', desc:'Park a call against a specific extension'},
+  callParkGroup: {title:'Call Park Group',     desc:'Automatic call park group configuration'},
+  callPickup:    {title:'Call Pickup',         desc:'Call pickup group configuration'},
+  paging:        {title:'Paging',              desc:'Paging group configuration'},
+};
+
+let currentSheet = 'location';
+
+const KEY_PRESS_KEYS = ['0','1','2','3','4','5','6','7','8','9','*','#'];
+const AA_ACTIONS = ['','TRANSFER_WITH_PROMPT','TRANSFER_WITHOUT_PROMPT','TRANSFER_TO_OPERATOR',
+  'TRANSFER_TO_MAILBOX','EXTENSION_DIALING','NAME_DIALING','PLAY_ANNOUNCEMENT','REPEAT_MENU','EXIT','DISCONNECT'];
+
+// ======================== INIT ========================
+function init(){
+  buildKeyTable('aa-bkeys','bh');
+  buildKeyTable('aa-ahkeys','ah');
+  addAgentRow('hg-agents');
+  addAgentRow('cpg-agents');
+  addAgentRow('cp-agents');
+  addAgentRow('pg-targets');
+  addAgentRow('pg-origins');
+  // Restore previous session from this browser, if any
+  if(loadLocal()){
+    Object.keys(DB).forEach(s=>{ renderTable(s); updateBadge(s); });
+    const total = Object.values(DB).reduce((n,arr)=>n+arr.length,0);
+    if(total>0) showToast(`Restored ${total} record${total!==1?'s':''} from this browser.`);
+  }
+  refreshDatalists();
+}
+
+function buildKeyTable(tableId, prefix){
+  const t = document.getElementById(tableId);
+  t.innerHTML = `<thead><tr>
+    <th>Key</th><th style="width:280px">Description</th><th style="width:220px">Action</th><th style="width:150px">Value / Ext</th>
+  </tr></thead><tbody>${
+    KEY_PRESS_KEYS.map(k=>`<tr>
+      <td><span class="key-badge-sm">${k}</span></td>
+      <td><input id="${prefix}-desc-${k}" placeholder="e.g. Transfer to Sales"/></td>
+      <td><select id="${prefix}-act-${k}">${AA_ACTIONS.map(a=>`<option>${a}</option>`).join('')}</select></td>
+      <td><input id="${prefix}-val-${k}" placeholder="e.g. 5555"/></td>
+    </tr>`).join('')
+  }</tbody>`;
+}
+
+function addAgentRow(containerId, prefill){
+  const c = document.getElementById(containerId);
+  const row = document.createElement('div');
+  row.className='agent-row';
+  const val = prefill ? `value="${esc(prefill)}"` : '';
+  row.innerHTML=`<input list="dl-users-workspaces" ${val} placeholder="email@company.com or workspace name"/>
+    <button class="btn-icon btn-icon-rem" title="Remove" onclick="this.parentElement.remove()">✕</button>`;
+  c.appendChild(row);
+}
+
+// ======================== NAVIGATION ========================
+function switchSheet(id, el){
+  currentSheet = id;
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.sheet-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  document.getElementById('sh-title').textContent = SHEET_META[id].title;
+  document.getElementById('sh-desc').textContent  = SHEET_META[id].desc;
+  updateCount(id);
+}
+
+function updateCount(id){
+  const n = DB[id].length;
+  document.getElementById('sh-count').textContent = n+' record'+(n!==1?'s':'');
+}
+
+function updateBadge(id){
+  document.getElementById('badge-'+id).textContent = DB[id].length;
+  updateCount(id);
+}
+
+// ======================== AGENTS HELPER ========================
+function getAgents(containerId){
+  return Array.from(document.querySelectorAll('#'+containerId+' .agent-row input'))
+    .map(i=>i.value.trim()).filter(Boolean);
+}
+
+function v(id){ const el=document.getElementById(id); return el ? el.value.trim() : ''; }
+
+// ======================== ADD RECORD ========================
+function addRecord(sheet){
+  let rec={};
+  switch(sheet){
+    case 'location':
+      if(!v('loc-name')){alert('Name is required');return;}
+      rec={name:v('loc-name'),address:v('loc-addr'),city:v('loc-city'),state:v('loc-state'),
+        zip:v('loc-zip'),mainNumber:v('loc-main'),ecbn:v('loc-ecbn'),email:v('loc-email')};
+      clearIds(['loc-name','loc-addr','loc-city','loc-state','loc-zip','loc-main','loc-ecbn','loc-email']);
+      break;
+    case 'phoneNumbers':
+      if(!v('pn-number')){alert('Number is required');return;}
+      rec={number:v('pn-number'),location:v('pn-location')};
+      clearIds(['pn-number','pn-location']);
+      break;
+    case 'users':
+      if(!v('u-email')){alert('Email is required');return;}
+      rec={first:v('u-first'),last:v('u-last'),display:v('u-display'),email:v('u-email'),
+        ext:v('u-ext'),phone:v('u-phone'),mobile:v('u-mobile'),callerId:v('u-callerid'),
+        location:v('u-location'),city:v('u-city'),address:v('u-addr'),zip:v('u-zip'),
+        state:v('u-state'),country:v('u-country'),cidName:v('u-cidname'),
+        ecbn:v('u-ecbn'),vm:v('u-vm'),rec:v('u-rec'),hotel:v('u-hotel')};
+      clearIds(['u-first','u-last','u-display','u-email','u-ext','u-phone','u-mobile',
+        'u-callerid','u-location','u-city','u-addr','u-zip','u-state','u-country','u-cidname']);
+      break;
+    case 'userDevices':
+      if(!v('ud-user')){alert('Username is required');return;}
+      rec={user:v('ud-user'),type:v('ud-type'),devType:v('ud-devtype'),
+        model:v('ud-model'),mac:v('ud-mac'),location:v('ud-loc')};
+      clearIds(['ud-user','ud-model','ud-mac','ud-loc']);
+      break;
+    case 'workspaceDevices':
+      if(!v('wd-user')){alert('Workspace name is required');return;}
+      rec={user:v('wd-user'),type:v('wd-type'),ext:v('wd-ext'),phone:v('wd-phone'),
+        devType:v('wd-devtype'),model:v('wd-model'),mac:v('wd-mac'),location:v('wd-loc')};
+      clearIds(['wd-user','wd-ext','wd-phone','wd-model','wd-mac','wd-loc']);
+      break;
+    case 'virtualLines':
+      if(!v('vl-first')){alert('First name is required');return;}
+      rec={first:v('vl-first'),last:v('vl-last'),display:v('vl-display'),
+        location:v('vl-loc'),phone:v('vl-phone'),ext:v('vl-ext')};
+      clearIds(['vl-first','vl-last','vl-display','vl-loc','vl-phone','vl-ext']);
+      break;
+    case 'analogDevices':
+      rec={desc:v('ad-desc'),dn:v('ad-dn'),phone:v('ad-phone'),location:v('ad-loc'),
+        type:v('ad-type'),mac:v('ad-mac'),port:v('ad-port')};
+      clearIds(['ad-desc','ad-dn','ad-phone','ad-loc','ad-mac','ad-port']);
+      break;
+    case 'huntGroup':
+      if(!v('hg-name')){alert('Name is required');return;}
+      rec={name:v('hg-name'),phone:v('hg-phone'),ext:v('hg-ext'),loc:v('hg-loc'),
+        pattern:v('hg-pattern'),farmve:v('hg-farmve'),fwdnum:v('hg-fwdnum'),
+        aarne:v('hg-aarne'),aar:v('hg-aar'),awbe:v('hg-awbe'),fare:v('hg-fare'),
+        far:v('hg-far'),fwdnum2:v('hg-fwdnum2'),hgbe:v('hg-hgbe'),dwbe:v('hg-dwbe'),
+        dwbn:v('hg-dwbn'),dbvme:v('hg-dbvme'),dwue:v('hg-dwue'),dwun:v('hg-dwun'),
+        agentAction:v('hg-agentaction'),agents:getAgents('hg-agents')};
+      clearIds(['hg-name','hg-phone','hg-ext','hg-loc','hg-fwdnum','hg-aar','hg-far','hg-fwdnum2','hg-dwbn','hg-dwun']);
+      document.getElementById('hg-agents').innerHTML='';
+      addAgentRow('hg-agents');
+      break;
+    case 'autoAttendant':
+      if(!v('aa-name')){alert('Name is required');return;}
+      const bhKeys={}; const ahKeys={};
+      KEY_PRESS_KEYS.forEach(k=>{
+        bhKeys[k]={desc:v('bh-desc-'+k),act:v('bh-act-'+k),val:v('bh-val-'+k)};
+        ahKeys[k]={desc:v('ah-desc-'+k),act:v('ah-act-'+k),val:v('ah-val-'+k)};
+      });
+      rec={name:v('aa-name'),phone:v('aa-phone'),ext:v('aa-ext'),loc:v('aa-loc'),
+        bsched:v('aa-bsched'),hsched:v('aa-hsched'),alt1:v('aa-alt1'),alt2:v('aa-alt2'),
+        bme:v('aa-bme'),ahme:v('aa-ahme'),
+        bgt:v('aa-bgt'),ban:v('aa-ban'),
+        ahgt:v('aa-ahgt'),ahan:v('aa-ahan'),ahamt:v('aa-ahamt'),
+        bret:v('aa-bret'),btimer:v('aa-btimer'),bact:v('aa-bact'),bcgt:v('aa-bcgt'),
+        ahret:v('aa-ahret'),ahtimer:v('aa-ahtimer'),ahact:v('aa-ahact'),ahcgt:v('aa-ahcgt'),
+        bhKeys,ahKeys};
+      clearIds(['aa-name','aa-phone','aa-ext','aa-loc','aa-bsched','aa-hsched','aa-alt1','aa-alt2','aa-btimer','aa-ahtimer','aa-ban','aa-ahan']);
+      KEY_PRESS_KEYS.forEach(k=>{
+        clearIds(['bh-desc-'+k,'bh-val-'+k,'ah-desc-'+k,'ah-val-'+k]);
+        const ba=document.getElementById('bh-act-'+k); if(ba) ba.value='';
+        const aa=document.getElementById('ah-act-'+k); if(aa) aa.value='';
+      });
+      break;
+    case 'callParkExt':
+      if(!v('cpe-name')){alert('Extension name is required');return;}
+      rec={location:v('cpe-loc'),name:v('cpe-name'),ext:v('cpe-ext')};
+      clearIds(['cpe-loc','cpe-name','cpe-ext']);
+      break;
+    case 'callParkGroup':
+      if(!v('cpg-name')){alert('Name is required');return;}
+      rec={name:v('cpg-name'),location:v('cpg-loc'),recall:v('cpg-recall'),
+        hg:v('cpg-hg'),action:v('cpg-action'),agents:getAgents('cpg-agents')};
+      clearIds(['cpg-name','cpg-loc','cpg-hg']);
+      document.getElementById('cpg-agents').innerHTML='';
+      addAgentRow('cpg-agents');
+      break;
+    case 'callPickup':
+      if(!v('cp-name')){alert('Name is required');return;}
+      rec={name:v('cp-name'),location:v('cp-loc'),notif:v('cp-notif'),
+        delay:v('cp-delay'),action:v('cp-action'),agents:getAgents('cp-agents')};
+      clearIds(['cp-name','cp-loc','cp-delay']);
+      document.getElementById('cp-agents').innerHTML='';
+      addAgentRow('cp-agents');
+      break;
+    case 'paging':
+      if(!v('pg-name')){alert('Group name is required');return;}
+      rec={location:v('pg-loc'),name:v('pg-name'),phone:v('pg-phone'),ext:v('pg-ext'),
+        label:v('pg-label'),targets:getAgents('pg-targets'),origins:getAgents('pg-origins')};
+      clearIds(['pg-loc','pg-name','pg-phone','pg-ext','pg-label']);
+      document.getElementById('pg-targets').innerHTML=''; addAgentRow('pg-targets');
+      document.getElementById('pg-origins').innerHTML=''; addAgentRow('pg-origins');
+      break;
+  }
+  DB[sheet].push(rec);
+  renderTable(sheet);
+  updateBadge(sheet);
+  refreshDatalists();
+  saveLocal();
+}
+
+function clearIds(ids){ ids.forEach(id=>{const el=document.getElementById(id);if(el)el.value='';}); }
+
+// ======================== TABLE RENDERING ========================
+const TABLE_COLS = {
+  location:         ['Name','Address','City','State','Zip','Main Number','Emergency Callback #','Emergency Email'],
+  phoneNumbers:     ['Number','Location'],
+  users:            ['Email','First Name','Last Name','Extension','Phone','Location','Voicemail','Recording'],
+  userDevices:      ['Username','Type','Device Type','Model','MAC Address','Location'],
+  workspaceDevices: ['Workspace','Type','Extension','Phone','Model','MAC','Location'],
+  virtualLines:     ['First Name','Last Name','Display Name','Location','Phone','Extension'],
+  analogDevices:    ['Description','Directory #','Phone','Location','Type','MAC','Port'],
+  huntGroup:        ['Name','Phone','Extension','Location','Pattern','Agents'],
+  autoAttendant:    ['Name','Phone','Extension','Location','Business Sched','Keys Configured'],
+  callParkExt:      ['Location','Name','Extension'],
+  callParkGroup:    ['Name','Location','Recall To','Members'],
+  callPickup:       ['Name','Location','Notification','Members'],
+  paging:           ['Location','Group Name','Extension','Targets','Originators'],
+};
+
+function recToRow(sheet, rec){
+  switch(sheet){
+    case 'location':      return [rec.name,rec.address,rec.city,rec.state,rec.zip,rec.mainNumber,rec.ecbn,rec.email];
+    case 'phoneNumbers':  return [rec.number,rec.location];
+    case 'users':         return [rec.email,rec.first,rec.last,rec.ext,rec.phone,rec.location,rec.vm,rec.rec];
+    case 'userDevices':   return [rec.user,rec.type,rec.devType,rec.model,rec.mac,rec.location];
+    case 'workspaceDevices': return [rec.user,rec.type,rec.ext,rec.phone,rec.model,rec.mac,rec.location];
+    case 'virtualLines':  return [rec.first,rec.last,rec.display,rec.location,rec.phone,rec.ext];
+    case 'analogDevices': return [rec.desc,rec.dn,rec.phone,rec.location,rec.type,rec.mac,rec.port];
+    case 'huntGroup':     return [rec.name,rec.phone,rec.ext,rec.loc,rec.pattern,rec.agents.join(', ')];
+    case 'autoAttendant': {
+      const cnt = KEY_PRESS_KEYS.filter(k=>rec.bhKeys[k].act||rec.ahKeys[k].act).length;
+      return [rec.name,rec.phone,rec.ext,rec.loc,rec.bsched,cnt+' keys configured'];
+    }
+    case 'callParkExt':   return [rec.location,rec.name,rec.ext];
+    case 'callParkGroup': return [rec.name,rec.location,rec.recall,rec.agents.join(', ')];
+    case 'callPickup':    return [rec.name,rec.location,rec.notif,rec.agents.join(', ')];
+    case 'paging':        return [rec.location,rec.name,rec.ext,rec.targets.join(', '),rec.origins.join(', ')];
+  }
+}
+
+function renderTable(sheet){
+  const rows = DB[sheet];
+  const cols = TABLE_COLS[sheet];
+  const wrap = document.getElementById('tbl-'+sheet);
+  if(!rows.length){ wrap.innerHTML='<p class="empty-msg">No records yet.</p>'; return; }
+  wrap.innerHTML = `<table class="data-table">
+    <thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}<th></th></tr></thead>
+    <tbody>${rows.map((r,i)=>`<tr>${recToRow(sheet,r).map(c=>`<td title="${esc(c)}">${esc(c)}</td>`).join('')}
+      <td><button class="btn-danger" onclick="deleteRecord('${sheet}',${i})">✕</button></td>
+    </tr>`).join('')}</tbody>
+  </table>`;
+}
+
+function deleteRecord(sheet, idx){
+  DB[sheet].splice(idx,1);
+  renderTable(sheet);
+  updateBadge(sheet);
+  refreshDatalists();
+  saveLocal();
+}
+
+function esc(v){ return (v||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ======================== CSV EXPORT ========================
+const CSV_HEADERS = {
+  location: ['Name','Address','City','State','Zip','Main Number','Emergency Callback Number','Emergency Notification Email'],
+  phoneNumbers: ['NUMBER','LOCATION'],
+  users: ['First Name','Last Name','Display Name','User ID/Email','Extension','Phone Number','Mobile Number',
+    'Caller ID Number','Location','City','Address','Zip/postal code','State/province','Country',
+    'Custom External Caller ID Name','Voicemail Enabled','Emergyency Call Back Number','Call Recording Enabled','Hoteling Enabled'],
+  userDevices: ['Username','Type','Device Type','Model','MAC Address','Location'],
+  workspaceDevices: ['Username','Type','Extension','Phone Number','Device Type','Model','MAC Address','Location'],
+  virtualLines: ['First Name','Last Name','Display Name','Location','Phone Number','Extension'],
+  analogDevices: ['Description','Directory Number','Phone Number','Location','Device Type','Mac Address','Port Number'],
+  huntGroup: ['Name','Phone Number','Extension','Location','Call Routing Pattern',
+    'Forward After Rings Voicemail Enable','Forward Number','Advance After Set Number Of Rings Enable',
+    'Advance After Set Number Of Rings','Advance When Busy Enable','Forward After Rings Enable',
+    'Forward After Rings','Forward Number2','Hunt Group Busy Enable','Divert When Busy Enable',
+    'Divert When Busy Number','Divert When Busy Voicemail Enable','Divert When Unreachable Enable',
+    'Divert When Unreachable Number','Agent Action',
+    ...[...Array(10)].map((_,i)=>`Agent${i+1} ID`)],
+  autoAttendant: [
+    'Name','Phone Number','Extension','Location','Business Schedule','Holiday Schedule',
+    'BusinessHoursMenu Extension Enabled','AfterHoursMenu Extension Enabled',
+    'Business Hours Greeting Type','Business Hours Announcement Name',
+    'After Hours Greeting Type','After Hours Announcement Name','After Hours Announcement Media Type',
+    'Business Hours Call Treatment Retry Attempt For No Input','Business Hours Call Treatment No Input Timer',
+    'Business Hours Call Treatment Action','Business Hours Call Treatment Greeting Type',
+    'After Hours Call Treatment Retry Attempt For No Input','After Hours Call Treatment No Input Timer',
+    'After Hours Call Treatment Action','After Hours Call Treatment Greeting Type',
+    ...KEY_PRESS_KEYS.flatMap(k=>[`Business Hours Press ${k} Description`,`Business Hours Press ${k} Action`,`Business Hours Press ${k} Value`]),
+    ...KEY_PRESS_KEYS.flatMap(k=>[`After Hours Press ${k} Description`,`After Hours Press ${k} Action`,`After Hours Press ${k} Value`]),
+    'Alternate Number1','Alternate Number2'
+  ],
+  callParkExt: ['Location','Call Park Extension Name','Extension'],
+  callParkGroup: ['Call Park Name','Location Name','Recall To','Hunt Group Name','Member Action',
+    'Agent1 ID','Agent2 ID','Agent3 ID'],
+  callPickup: ['Name','Location','Notification Type','Notification Delay Timer In Seconds','Agent Action',
+    'Agent1 ID','Agent2 ID','Agent3 ID'],
+  paging: ['Location','Paging Group Name','Phone Number','Extension','Calling ID Label',
+    'Paging Targets','Paging Originators'],
+};
+
+function recToCSVRow(sheet, rec){
+  switch(sheet){
+    case 'location':      return [rec.name,rec.address,rec.city,rec.state,rec.zip,rec.mainNumber,rec.ecbn,rec.email];
+    case 'phoneNumbers':  return [rec.number,rec.location];
+    case 'users':         return [rec.first,rec.last,rec.display,rec.email,rec.ext,rec.phone,rec.mobile,
+      rec.callerId,rec.location,rec.city,rec.address,rec.zip,rec.state,rec.country,rec.cidName,rec.vm,rec.ecbn,rec.rec,rec.hotel];
+    case 'userDevices':   return [rec.user,rec.type,rec.devType,rec.model,rec.mac,rec.location];
+    case 'workspaceDevices': return [rec.user,rec.type,rec.ext,rec.phone,rec.devType,rec.model,rec.mac,rec.location];
+    case 'virtualLines':  return [rec.first,rec.last,rec.display,rec.location,rec.phone,rec.ext];
+    case 'analogDevices': return [rec.desc,rec.dn,rec.phone,rec.location,rec.type,rec.mac,rec.port];
+    case 'huntGroup': {
+      const agentCols = [...Array(10)].map((_,i)=>rec.agents[i]||'');
+      return [rec.name,rec.phone,rec.ext,rec.loc,rec.pattern,rec.farmve,rec.fwdnum,
+        rec.aarne,rec.aar,rec.awbe,rec.fare,rec.far,rec.fwdnum2,rec.hgbe,rec.dwbe,
+        rec.dwbn,rec.dbvme,rec.dwue,rec.dwun,rec.agentAction,...agentCols];
+    }
+    case 'autoAttendant': {
+      const bk = KEY_PRESS_KEYS.flatMap(k=>[rec.bhKeys[k].desc,rec.bhKeys[k].act,rec.bhKeys[k].val]);
+      const ak = KEY_PRESS_KEYS.flatMap(k=>[rec.ahKeys[k].desc,rec.ahKeys[k].act,rec.ahKeys[k].val]);
+      return [rec.name,rec.phone,rec.ext,rec.loc,rec.bsched,rec.hsched,rec.bme,rec.ahme,
+        rec.bgt,rec.ban,rec.ahgt,rec.ahan,rec.ahamt,
+        rec.bret,rec.btimer,rec.bact,rec.bcgt,
+        rec.ahret,rec.ahtimer,rec.ahact,rec.ahcgt,
+        ...bk,...ak,rec.alt1,rec.alt2];
+    }
+    case 'callParkExt':   return [rec.location,rec.name,rec.ext];
+    case 'callParkGroup': {
+      const m = [...Array(3)].map((_,i)=>rec.agents[i]||'');
+      return [rec.name,rec.location,rec.recall,rec.hg,rec.action,...m];
+    }
+    case 'callPickup': {
+      const m = [...Array(3)].map((_,i)=>rec.agents[i]||'');
+      return [rec.name,rec.location,rec.notif,rec.delay,rec.action,...m];
+    }
+    case 'paging':
+      return [rec.location,rec.name,rec.phone,rec.ext,rec.label,rec.targets.join('\n'),rec.origins.join('\n')];
+  }
+}
+
+function buildCSV(sheet){
+  const headers = CSV_HEADERS[sheet];
+  const rows = DB[sheet].map(r=>recToCSVRow(sheet,r));
+  return [headers,...rows].map(r=>r.map(v=>`"${(v||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+}
+
+function downloadCSV(filename, csv){
+  const blob = new Blob([csv],{type:'text/csv'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href=url; a.download=filename; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportCurrent(){
+  const sheet = currentSheet;
+  downloadCSV(SHEET_META[sheet].title.replace(/[\s/]+/g,'_')+'.csv', buildCSV(sheet));
+  const btn = document.getElementById('sh-export-btn');
+  btn.textContent='✓ Exported!'; btn.style.color='#16a34a';
+  setTimeout(()=>{btn.textContent='⬇ Export CSV'; btn.style.color='';},2000);
+}
+
+function exportAll(){
+  Object.keys(DB).forEach((sheet,i)=>{
+    if(DB[sheet].length>0){
+      setTimeout(()=>downloadCSV(SHEET_META[sheet].title.replace(/[\s/]+/g,'_')+'.csv', buildCSV(sheet)), i*200);
+    }
+  });
+}
+
+// ======================== CROSS-REFERENCE DATALISTS ========================
+function setDatalist(id, values){
+  const dl = document.getElementById(id);
+  // Dedupe + sort + drop blanks
+  const uniq = [...new Set(values.filter(v=>v && String(v).trim()))].sort();
+  dl.innerHTML = uniq.map(v=>`<option value="${esc(v)}"></option>`).join('');
+}
+function refreshDatalists(){
+  setDatalist('dl-locations',  DB.location.map(r=>r.name));
+  // Phone numbers come from the Phone Numbers sheet plus anywhere else a number lives
+  const phones = [
+    ...DB.phoneNumbers.map(r=>r.number),
+    ...DB.location.map(r=>r.mainNumber),
+  ];
+  setDatalist('dl-phones', phones);
+  setDatalist('dl-users',       DB.users.map(r=>r.email));
+  setDatalist('dl-workspaces',  DB.workspaceDevices.map(r=>r.user));
+  setDatalist('dl-users-workspaces', [
+    ...DB.users.map(r=>r.email),
+    ...DB.workspaceDevices.map(r=>r.user),
+  ]);
+  setDatalist('dl-huntgroups',  DB.huntGroup.map(r=>r.name));
+}
+
+// ======================== LOCAL STORAGE ========================
+const LS_KEY = 'webexCallingDataCollection_v5';
+function saveLocal(){
+  try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch(e){ console.warn('Could not save to localStorage:', e); }
+}
+function loadLocal(){
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return false;
+    const data = JSON.parse(raw);
+    Object.keys(DB).forEach(k=>{ if(Array.isArray(data[k])) DB[k] = data[k]; });
+    return true;
+  } catch(e){ console.warn('Could not load from localStorage:', e); return false; }
+}
+function clearAll(){
+  if(!confirm('Clear ALL data from every sheet?\n\nThis cannot be undone. Export your CSVs first if you want a backup.')) return;
+  Object.keys(DB).forEach(k=>{ DB[k]=[]; });
+  saveLocal();
+  Object.keys(DB).forEach(s=>{ renderTable(s); updateBadge(s); });
+  refreshDatalists();
+  showToast('All data cleared.');
+}
+
+// ======================== TOAST ========================
+let toastTimer = null;
+function showToast(msg, kind){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.background = kind==='error' ? '#991b1b' : (kind==='warn' ? '#92400e' : '#1e3a5f');
+  t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ t.style.display='none'; }, 4500);
+}
+
+// ======================== CSV IMPORT ========================
+// Map a CSV's header signature to a sheet key. We match by the FIRST header
+// (which is unique enough across these specific exports) with a few fallbacks.
+function detectSheet(headers){
+  const h = headers.map(x=>x.trim());
+  const first = (h[0]||'').toLowerCase();
+  // Exact-set match first for max safety
+  for(const sheet of Object.keys(CSV_HEADERS)){
+    const expected = CSV_HEADERS[sheet].map(x=>x.toLowerCase());
+    if(expected.length === h.length && expected.every((c,i)=> (h[i]||'').toLowerCase() === c)) return sheet;
+  }
+  // Fallback: distinctive first-column heuristics
+  const map = {
+    'number':'phoneNumbers',
+    'first name':'users',         // also virtualLines — disambiguate by length
+    'username':'userDevices',     // userDevices has 6 cols, workspaceDevices has 8
+    'description':'analogDevices',
+  };
+  if(first==='name'){
+    if(h.includes('Address') || h.includes('address')) return 'location';
+    if(h.includes('Phone Number') && h.includes('Extension') && h.includes('Call Routing Pattern')) return 'huntGroup';
+    if(h.includes('Phone Number') && h.includes('Business Schedule')) return 'autoAttendant';
+    if(h.includes('Notification Type')) return 'callPickup';
+  }
+  if(first==='location'){
+    if(h.includes('Call Park Extension Name')) return 'callParkExt';
+    if(h.includes('Paging Group Name')) return 'paging';
+  }
+  if(first==='call park name') return 'callParkGroup';
+  if(first==='first name'){
+    return h.length >= 19 ? 'users' : 'virtualLines';
+  }
+  if(first==='username'){
+    return h.length === 8 ? 'workspaceDevices' : 'userDevices';
+  }
+  return map[first] || null;
+}
+
+// Minimal RFC-4180-ish CSV parser. Handles quoted fields and "" escapes.
+function parseCSV(text){
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  // Normalize line endings
+  text = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+  for(let i=0; i<text.length; i++){
+    const c = text[i];
+    if(inQuotes){
+      if(c === '"'){
+        if(text[i+1] === '"'){ field += '"'; i++; }
+        else inQuotes = false;
+      } else field += c;
+    } else {
+      if(c === '"'){ inQuotes = true; }
+      else if(c === ','){ row.push(field); field=''; }
+      else if(c === '\n'){ row.push(field); rows.push(row); row=[]; field=''; }
+      else field += c;
+    }
+  }
+  if(field !== '' || row.length){ row.push(field); rows.push(row); }
+  // Drop fully-empty trailing rows
+  while(rows.length && rows[rows.length-1].every(v=>v==='')) rows.pop();
+  return rows;
+}
+
+// Build a record from a CSV row using the column order in CSV_HEADERS[sheet].
+function csvRowToRec(sheet, headers, values){
+  // Build a header->value object first (case/space insensitive)
+  const norm = s => (s||'').trim().toLowerCase();
+  const row = {};
+  headers.forEach((h,i)=>{ row[norm(h)] = (values[i]||'').trim(); });
+  const get = h => row[norm(h)] || '';
+
+  switch(sheet){
+    case 'location':
+      return {name:get('Name'),address:get('Address'),city:get('City'),state:get('State'),zip:get('Zip'),
+        mainNumber:get('Main Number'),ecbn:get('Emergency Callback Number'),email:get('Emergency Notification Email')};
+    case 'phoneNumbers':
+      return {number:get('NUMBER'),location:get('LOCATION')};
+    case 'users':
+      return {first:get('First Name'),last:get('Last Name'),display:get('Display Name'),email:get('User ID/Email'),
+        ext:get('Extension'),phone:get('Phone Number'),mobile:get('Mobile Number'),callerId:get('Caller ID Number'),
+        location:get('Location'),city:get('City'),address:get('Address'),zip:get('Zip/postal code'),
+        state:get('State/province'),country:get('Country'),cidName:get('Custom External Caller ID Name'),
+        vm:get('Voicemail Enabled'),ecbn:get('Emergyency Call Back Number'),rec:get('Call Recording Enabled'),
+        hotel:get('Hoteling Enabled')};
+    case 'userDevices':
+      return {user:get('Username'),type:get('Type'),devType:get('Device Type'),model:get('Model'),
+        mac:get('MAC Address'),location:get('Location')};
+    case 'workspaceDevices':
+      return {user:get('Username'),type:get('Type'),ext:get('Extension'),phone:get('Phone Number'),
+        devType:get('Device Type'),model:get('Model'),mac:get('MAC Address'),location:get('Location')};
+    case 'virtualLines':
+      return {first:get('First Name'),last:get('Last Name'),display:get('Display Name'),
+        location:get('Location'),phone:get('Phone Number'),ext:get('Extension')};
+    case 'analogDevices':
+      return {desc:get('Description'),dn:get('Directory Number'),phone:get('Phone Number'),
+        location:get('Location'),type:get('Device Type'),mac:get('Mac Address'),port:get('Port Number')};
+    case 'huntGroup': {
+      const agents = [];
+      for(let i=1;i<=10;i++){ const a = get(`Agent${i} ID`); if(a) agents.push(a); }
+      return {name:get('Name'),phone:get('Phone Number'),ext:get('Extension'),loc:get('Location'),
+        pattern:get('Call Routing Pattern'),farmve:get('Forward After Rings Voicemail Enable'),
+        fwdnum:get('Forward Number'),aarne:get('Advance After Set Number Of Rings Enable'),
+        aar:get('Advance After Set Number Of Rings'),awbe:get('Advance When Busy Enable'),
+        fare:get('Forward After Rings Enable'),far:get('Forward After Rings'),
+        fwdnum2:get('Forward Number2'),hgbe:get('Hunt Group Busy Enable'),
+        dwbe:get('Divert When Busy Enable'),dwbn:get('Divert When Busy Number'),
+        dbvme:get('Divert When Busy Voicemail Enable'),dwue:get('Divert When Unreachable Enable'),
+        dwun:get('Divert When Unreachable Number'),agentAction:get('Agent Action'),agents};
+    }
+    case 'autoAttendant': {
+      const bhKeys = {}, ahKeys = {};
+      KEY_PRESS_KEYS.forEach(k=>{
+        bhKeys[k] = {desc:get(`Business Hours Press ${k} Description`),
+                     act:get(`Business Hours Press ${k} Action`),
+                     val:get(`Business Hours Press ${k} Value`)};
+        ahKeys[k] = {desc:get(`After Hours Press ${k} Description`),
+                     act:get(`After Hours Press ${k} Action`),
+                     val:get(`After Hours Press ${k} Value`)};
+      });
+      return {name:get('Name'),phone:get('Phone Number'),ext:get('Extension'),loc:get('Location'),
+        bsched:get('Business Schedule'),hsched:get('Holiday Schedule'),
+        bme:get('BusinessHoursMenu Extension Enabled'),ahme:get('AfterHoursMenu Extension Enabled'),
+        bgt:get('Business Hours Greeting Type'),ban:get('Business Hours Announcement Name'),
+        ahgt:get('After Hours Greeting Type'),ahan:get('After Hours Announcement Name'),
+        ahamt:get('After Hours Announcement Media Type'),
+        bret:get('Business Hours Call Treatment Retry Attempt For No Input'),
+        btimer:get('Business Hours Call Treatment No Input Timer'),
+        bact:get('Business Hours Call Treatment Action'),
+        bcgt:get('Business Hours Call Treatment Greeting Type'),
+        ahret:get('After Hours Call Treatment Retry Attempt For No Input'),
+        ahtimer:get('After Hours Call Treatment No Input Timer'),
+        ahact:get('After Hours Call Treatment Action'),
+        ahcgt:get('After Hours Call Treatment Greeting Type'),
+        bhKeys, ahKeys,
+        alt1:get('Alternate Number1'), alt2:get('Alternate Number2')};
+    }
+    case 'callParkExt':
+      return {location:get('Location'),name:get('Call Park Extension Name'),ext:get('Extension')};
+    case 'callParkGroup': {
+      const agents = [];
+      for(let i=1;i<=3;i++){ const a = get(`Agent${i} ID`); if(a) agents.push(a); }
+      return {name:get('Call Park Name'),location:get('Location Name'),recall:get('Recall To'),
+        hg:get('Hunt Group Name'),action:get('Member Action'),agents};
+    }
+    case 'callPickup': {
+      const agents = [];
+      for(let i=1;i<=3;i++){ const a = get(`Agent${i} ID`); if(a) agents.push(a); }
+      return {name:get('Name'),location:get('Location'),notif:get('Notification Type'),
+        delay:get('Notification Delay Timer In Seconds'),action:get('Agent Action'),agents};
+    }
+    case 'paging':
+      return {location:get('Location'),name:get('Paging Group Name'),phone:get('Phone Number'),
+        ext:get('Extension'),label:get('Calling ID Label'),
+        targets:get('Paging Targets').split(/\n+/).map(s=>s.trim()).filter(Boolean),
+        origins:get('Paging Originators').split(/\n+/).map(s=>s.trim()).filter(Boolean)};
+  }
+}
+
+function importOneCSV(filename, text){
+  const rows = parseCSV(text);
+  if(rows.length < 1) return {ok:false, msg:`${filename}: empty file`};
+  const headers = rows[0];
+  const sheet = detectSheet(headers);
+  if(!sheet) return {ok:false, msg:`${filename}: could not match headers to any known sheet`};
+  let added = 0;
+  for(let i=1; i<rows.length; i++){
+    const r = rows[i];
+    if(r.every(v=>!v||!v.trim())) continue; // skip blank lines
+    const rec = csvRowToRec(sheet, headers, r);
+    if(rec){ DB[sheet].push(rec); added++; }
+  }
+  return {ok:true, sheet, added};
+}
+
+function handleImport(ev){
+  const files = Array.from(ev.target.files||[]);
+  if(!files.length) return;
+  const results = [];
+  let done = 0;
+  files.forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const res = importOneCSV(file.name, reader.result);
+        results.push({file:file.name, ...res});
+      } catch(err){
+        results.push({file:file.name, ok:false, msg:err.message});
+      }
+      done++;
+      if(done === files.length){
+        // Refresh everything once at end
+        Object.keys(DB).forEach(s=>{ renderTable(s); updateBadge(s); });
+        refreshDatalists();
+        saveLocal();
+        const ok  = results.filter(r=>r.ok);
+        const bad = results.filter(r=>!r.ok);
+        const msg = (ok.length ? `Imported ${ok.length} file${ok.length!==1?'s':''} (${ok.reduce((s,r)=>s+r.added,0)} records). ` : '')
+                  + (bad.length ? `Skipped ${bad.length}: ${bad.map(r=>r.file).join(', ')}` : '');
+        showToast(msg.trim() || 'Nothing imported.', bad.length && !ok.length ? 'error' : (bad.length ? 'warn' : 'success'));
+        ev.target.value = ''; // reset so same file can be re-imported
+      }
+    };
+    reader.onerror = () => {
+      results.push({file:file.name, ok:false, msg:'read error'});
+      done++;
+    };
+    reader.readAsText(file);
+  });
+}
+
+// ======================== START ========================
+init();
+</script>
+</body>
+</html>
