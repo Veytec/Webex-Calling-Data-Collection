@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>WebEx Calling Data Collection</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,7 +10,8 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
 /* Topbar */
 #topbar{background:#1e3a5f;color:#fff;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:54px;flex-shrink:0}
 .brand{display:flex;align-items:center;gap:10px}
-.brand-icon{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px}
+.brand-icon{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:16px;padding:2px}
+.brand-icon svg{width:100%;height:100%;object-fit:contain}
 .brand-title{font-weight:600;font-size:14px}
 .brand-sub{font-size:10px;opacity:.65;margin-top:1px}
 .top-actions{display:flex;gap:8px}
@@ -119,86 +119,88 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
 
 <div id="topbar">
   <div class="brand">
-    <div class="brand-icon">📞</div>
+    <div class="brand-icon"><img src="data:image/png;base64,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" style="width:100%;height:100%;object-fit:contain"></div>
     <div>
       <div class="brand-title">WebEx Calling Data Collection</div>
       <div class="brand-sub">V5 Template</div>
     </div>
   </div>
   <div class="top-actions">
-    <button class="btn btn-outline" onclick="document.getElementById('import-input').click()">⬆ Import CSV(s)</button>
-    <button class="btn btn-outline" onclick="exportAll()">⬇ Export All CSVs</button>
-    <button class="btn btn-outline" onclick="clearAll()" title="Clear all in-browser data">🗑 Clear</button>
-    <input type="file" id="import-input" accept=".csv" multiple style="display:none" onchange="handleImport(event)"/>
+    <button class="btn btn-outline" onclick="saveJSON()" title="Save all data as a JSON file you can reload later">💾 Save Progress</button>
+    <button class="btn btn-outline" onclick="document.getElementById(&#39;load-json-input&#39;).click()" title="Load a previously saved JSON file">📂 Load Progress</button>
+    <div style="width:1px;height:24px;background:rgba(255,255,255,.2);margin:0 2px"></div>
+    <button class="btn btn-outline" onclick="exportAll()" title="Download one CSV per sheet">⬇ Export All CSVs</button>
+    <div style="width:1px;height:24px;background:rgba(255,255,255,.2);margin:0 2px"></div>
+    <button class="btn btn-outline" onclick="clearAll()" title="Wipe all in-browser data" style="border-color:rgba(239,68,68,.5);color:#fca5a5">🗑 Clear All</button>
+    <input type="file" id="load-json-input" accept=".json" style="display:none" onchange="loadJSON(event)">
   </div>
 </div>
 
-<!-- Toast notifications -->
-<div id="toast" style="position:fixed;bottom:24px;right:24px;background:#1e3a5f;color:#fff;padding:12px 18px;border-radius:8px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.18);display:none;z-index:9999;max-width:380px"></div>
+<!-- Toast notification -->
+<div id="toast" style="position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: rgb(30, 58, 95); color: rgb(255, 255, 255); padding: 10px 20px; border-radius: 10px; font-size: 12px; font-weight: 600; box-shadow: rgba(0, 0, 0, 0.25) 0px 4px 20px; transition: transform 0.3s, opacity 0.3s; opacity: 0; z-index: 9999; display: flex; align-items: center; gap: 8px; white-space: nowrap;"><span style="font-size:15px">💾</span> Restored 8 saved records from browser</div>
 
-<!-- Cross-reference datalists (populated dynamically) -->
-<datalist id="dl-locations"></datalist>
-<datalist id="dl-phones"></datalist>
-<datalist id="dl-users"></datalist>
-<datalist id="dl-workspaces"></datalist>
-<datalist id="dl-users-workspaces"></datalist>
+<!-- Datalists for autocomplete -->
+<datalist id="dl-locations"><option value="Veytec"></option></datalist>
+<datalist id="dl-phones"><option value="4074563438"></option><option value="4074563439"></option><option value="4074563436"></option><option value="4074584785"></option><option value="4785453654"></option><option value="4745896525"></option><option value="4075897819"></option></datalist>
+<datalist id="dl-agents"><option value="amorales@veytec.com"></option></datalist>
+<datalist id="dl-user-emails"><option value="amorales@veytec.com"></option></datalist>
 <datalist id="dl-huntgroups"></datalist>
 
 <div id="layout">
   <!-- Sidebar -->
   <div id="sidebar">
     <div class="sidebar-group">Infrastructure</div>
-    <div class="nav-item active" onclick="switchSheet('location',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;location&#39;,this)">
       <span class="nav-label">📍 Location</span>
-      <span class="nav-badge" id="badge-location">0</span>
+      <span class="nav-badge" id="badge-location">1</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('phoneNumbers',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;phoneNumbers&#39;,this)">
       <span class="nav-label">📋 Phone Numbers</span>
-      <span class="nav-badge" id="badge-phoneNumbers">0</span>
+      <span class="nav-badge" id="badge-phoneNumbers">6</span>
     </div>
-    <div class="sidebar-group">Users & Devices</div>
-    <div class="nav-item" onclick="switchSheet('users',this)">
+    <div class="sidebar-group">Users &amp; Devices</div>
+    <div class="nav-item" onclick="switchSheet(&#39;users&#39;,this)">
       <span class="nav-label">👤 Webex Users</span>
-      <span class="nav-badge" id="badge-users">0</span>
+      <span class="nav-badge" id="badge-users">1</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('userDevices',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;userDevices&#39;,this)">
       <span class="nav-label">📱 User Devices</span>
       <span class="nav-badge" id="badge-userDevices">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('workspaceDevices',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;workspaceDevices&#39;,this)">
       <span class="nav-label">🖥 Workspace Devices</span>
       <span class="nav-badge" id="badge-workspaceDevices">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('virtualLines',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;virtualLines&#39;,this)">
       <span class="nav-label">🔗 Virtual Lines</span>
       <span class="nav-badge" id="badge-virtualLines">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('analogDevices',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;analogDevices&#39;,this)">
       <span class="nav-label">📟 Analog Devices</span>
       <span class="nav-badge" id="badge-analogDevices">0</span>
     </div>
     <div class="sidebar-group">Features</div>
-    <div class="nav-item" onclick="switchSheet('huntGroup',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;huntGroup&#39;,this)">
       <span class="nav-label">🔎 Hunt Group</span>
       <span class="nav-badge" id="badge-huntGroup">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('autoAttendant',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;autoAttendant&#39;,this)">
       <span class="nav-label">🤖 Auto Attendant</span>
       <span class="nav-badge" id="badge-autoAttendant">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('callParkExt',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;callParkExt&#39;,this)">
       <span class="nav-label">🅿 Call Park Ext.</span>
       <span class="nav-badge" id="badge-callParkExt">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('callParkGroup',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;callParkGroup&#39;,this)">
       <span class="nav-label">🅿 Call Park Group</span>
       <span class="nav-badge" id="badge-callParkGroup">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('callPickup',this)">
+    <div class="nav-item" onclick="switchSheet(&#39;callPickup&#39;,this)">
       <span class="nav-label">📞 Call Pickup</span>
       <span class="nav-badge" id="badge-callPickup">0</span>
     </div>
-    <div class="nav-item" onclick="switchSheet('paging',this)">
+    <div class="nav-item active" onclick="switchSheet(&#39;paging&#39;,this)">
       <span class="nav-label">📢 Paging</span>
       <span class="nav-badge" id="badge-paging">0</span>
     </div>
@@ -209,12 +211,13 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
     <div id="sheet-header">
       <div class="sheet-header">
         <div>
-          <div class="sheet-title" id="sh-title">Location</div>
-          <div class="sheet-desc" id="sh-desc">Site and location configuration</div>
+          <div class="sheet-title" id="sh-title">Paging</div>
+          <div class="sheet-desc" id="sh-desc">Paging group configuration</div>
         </div>
         <div class="sheet-actions">
           <span class="rec-count" id="sh-count">0 records</span>
-          <button class="btn-export" id="sh-export-btn" onclick="exportCurrent()">⬇ Export CSV</button>
+          <button class="btn-export" id="sh-export-json-btn" onclick="exportCurrentJSON()">⬇ JSON</button>
+          <button class="btn-export" id="sh-export-btn" onclick="exportCurrent()">⬇ CSV</button>
         </div>
       </div>
     </div>
@@ -222,30 +225,35 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
     <div id="content">
 
       <!-- ==================== LOCATION ==================== -->
-      <div class="sheet-panel active" id="panel-location">
+      <div class="sheet-panel" id="panel-location">
         <div class="form-card">
           <div class="form-card-header"><span class="form-card-title">Add Location</span></div>
           <div class="form-card-body">
             <div class="grid-4">
-              <div class="field"><label>Name *</label><input id="loc-name" placeholder="Smallville"/></div>
-              <div class="field"><label>Main Number</label><input id="loc-main" placeholder="4075551234"/></div>
-              <div class="field"><label>Emergency Callback #</label><input id="loc-ecbn" placeholder="4075551234"/></div>
-              <div class="field"><label>Emergency Notify Email</label><input id="loc-email" placeholder="911@email.com"/></div>
+              <div class="field"><label>Name *</label><input id="loc-name" placeholder="Veytec"></div>
+              <div class="field"><label>Main Number</label><input id="loc-main" placeholder="4075551234"></div>
+              <div class="field"><label>Emergency Callback #</label><input id="loc-ecbn" placeholder="4075551234"></div>
+              <div class="field"><label>Emergency Notify Email</label><input id="loc-email" placeholder="911@veytec.com"></div>
             </div>
             <div class="grid-4" style="margin-top:10px">
-              <div class="field"><label>Address</label><input id="loc-addr" placeholder="123 Somewhere Ave"/></div>
-              <div class="field"><label>City</label><input id="loc-city" placeholder="Smallville"/></div>
-              <div class="field"><label>State</label><input id="loc-state" placeholder="OH"/></div>
-              <div class="field"><label>Zip</label><input id="loc-zip" placeholder="32556"/></div>
+              <div class="field"><label>Address</label><input id="loc-addr" placeholder="123 Somewhere Ave"></div>
+              <div class="field"><label>City</label><input id="loc-city" placeholder="Orlando"></div>
+              <div class="field"><label>State</label><input id="loc-state" placeholder="FL"></div>
+              <div class="field"><label>Zip</label><input id="loc-zip" placeholder="32818"></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('location')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;location&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
         <div class="data-table-wrap">
           <div class="data-table-header"><span class="data-table-title">Locations</span></div>
-          <div id="tbl-location"><p class="empty-msg">No records yet. Fill out the form above and click "Add to Table".</p></div>
+          <div id="tbl-location"><table class="data-table">
+    <thead><tr><th>Name</th><th>Address</th><th>City</th><th>State</th><th>Zip</th><th>Main Number</th><th>Emergency Callback #</th><th>Emergency Email</th><th></th></tr></thead>
+    <tbody><tr><td title="Veytec">Veytec</td><td title="2301 Silver Star Rd">2301 Silver Star Rd</td><td title="Orlando">Orlando</td><td title="FL">FL</td><td title="32818">32818</td><td title="4075897819">4075897819</td><td title="4075897819">4075897819</td><td title="911@email.com">911@email.com</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;location&#39;,0)">✕</button></td>
+    </tr></tbody>
+  </table></div>
         </div>
       </div>
 
@@ -255,17 +263,32 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add Phone Number</span></div>
           <div class="form-card-body">
             <div class="grid-2">
-              <div class="field"><label>Number *</label><input id="pn-number" placeholder="4075551234"/></div>
-              <div class="field"><label>Location</label><input id="pn-location" placeholder="ORLANDO" list="dl-locations"/></div>
+              <div class="field"><label>Number(s) * (comma-separated)</label><input id="pn-number" placeholder="4075551234, 4075559876, 4075554321"></div>
+              <div class="field"><label>Location</label><input id="pn-location" placeholder="Veytec" list="dl-locations"></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('phoneNumbers')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;phoneNumbers&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
         <div class="data-table-wrap">
           <div class="data-table-header"><span class="data-table-title">Phone Numbers</span></div>
-          <div id="tbl-phoneNumbers"><p class="empty-msg">No records yet.</p></div>
+          <div id="tbl-phoneNumbers"><table class="data-table">
+    <thead><tr><th>Number</th><th>Location</th><th></th></tr></thead>
+    <tbody><tr><td title="4074563438">4074563438</td><td title="Veytec">Veytec</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;phoneNumbers&#39;,0)">✕</button></td>
+    </tr><tr><td title="4074563439">4074563439</td><td title="Veytec">Veytec</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;phoneNumbers&#39;,1)">✕</button></td>
+    </tr><tr><td title="4074563436">4074563436</td><td title="Veytec">Veytec</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;phoneNumbers&#39;,2)">✕</button></td>
+    </tr><tr><td title="4074584785">4074584785</td><td title="Veytec">Veytec</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;phoneNumbers&#39;,3)">✕</button></td>
+    </tr><tr><td title="4785453654">4785453654</td><td title="Veytec">Veytec</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;phoneNumbers&#39;,4)">✕</button></td>
+    </tr><tr><td title="4745896525">4745896525</td><td title="Veytec">Veytec</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;phoneNumbers&#39;,5)">✕</button></td>
+    </tr></tbody>
+  </table></div>
         </div>
       </div>
 
@@ -276,31 +299,31 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-body">
             <div class="section-divider">Identity</div>
             <div class="grid-4">
-              <div class="field"><label>First Name *</label><input id="u-first" placeholder="John"/></div>
-              <div class="field"><label>Last Name *</label><input id="u-last" placeholder="Doe"/></div>
-              <div class="field"><label>Display Name</label><input id="u-display" placeholder="John Doe"/></div>
-              <div class="field"><label>User ID / Email *</label><input id="u-email" placeholder="john@company.com"/></div>
+              <div class="field"><label>First Name *</label><input id="u-first" placeholder="John"></div>
+              <div class="field"><label>Last Name *</label><input id="u-last" placeholder="Doe"></div>
+              <div class="field"><label>Display Name</label><input id="u-display" placeholder="John Doe"></div>
+              <div class="field"><label>User ID / Email *</label><input id="u-email" placeholder="john@veytec.com"></div>
             </div>
             <div class="section-divider">Calling</div>
             <div class="grid-4">
-              <div class="field"><label>Extension</label><input id="u-ext" placeholder="5001"/></div>
-              <div class="field"><label>Phone Number</label><input id="u-phone" placeholder="4075551234" list="dl-phones"/></div>
-              <div class="field"><label>Mobile Number</label><input id="u-mobile" placeholder="3214567890"/></div>
-              <div class="field"><label>Caller ID Number</label><input id="u-callerid" placeholder="4078881212"/></div>
+              <div class="field"><label>Extension</label><input id="u-ext" placeholder="5001"></div>
+              <div class="field"><label>Phone Number</label><input id="u-phone" placeholder="4075551234" list="dl-phones"></div>
+              <div class="field"><label>Mobile Number</label><input id="u-mobile" placeholder="3214567890" list="dl-phones"></div>
+              <div class="field"><label>Caller ID Number</label><input id="u-callerid" placeholder="4078881212" list="dl-phones"></div>
             </div>
             <div class="section-divider">Location</div>
             <div class="grid-4">
-              <div class="field"><label>Location</label><input id="u-location" placeholder="Main Office" list="dl-locations"/></div>
-              <div class="field"><label>City</label><input id="u-city" placeholder="Hollywood"/></div>
-              <div class="field"><label>Address</label><input id="u-addr" placeholder="100 Universal City Plaza"/></div>
-              <div class="field"><label>Zip / Postal Code</label><input id="u-zip" placeholder="91608"/></div>
+              <div class="field"><label>Location</label><input id="u-location" placeholder="Main Office" list="dl-locations"></div>
+              <div class="field"><label>City</label><input id="u-city" placeholder="Hollywood"></div>
+              <div class="field"><label>Address</label><input id="u-addr" placeholder="100 Universal City Plaza"></div>
+              <div class="field"><label>Zip / Postal Code</label><input id="u-zip" placeholder="91608"></div>
             </div>
             <div class="grid-4" style="margin-top:10px">
-              <div class="field"><label>State / Province</label><input id="u-state" placeholder="California"/></div>
-              <div class="field"><label>Country</label><input id="u-country" placeholder="US"/></div>
-              <div class="field"><label>Custom Caller ID Name</label><input id="u-cidname" placeholder="John Doe Personal"/></div>
+              <div class="field"><label>State / Province</label><input id="u-state" placeholder="California"></div>
+              <div class="field"><label>Country</label><input id="u-country" placeholder="US"></div>
+              <div class="field"><label>Custom Caller ID Name</label><input id="u-cidname" placeholder="John Doe Personal"></div>
               <div class="field"><label>Emergency Callback #</label>
-                <select id="u-ecbn"><option>DIRECT_LINE</option><option>LOCATION_ECBN</option></select>
+                <select id="u-ecbn"><option>LOCATION_ECBN</option><option>DIRECT_LINE</option></select>
               </div>
             </div>
             <div class="section-divider">Features</div>
@@ -313,13 +336,18 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
                 <select id="u-hotel"><option>FALSE</option><option>TRUE</option></select></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('users')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;users&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
         <div class="data-table-wrap">
           <div class="data-table-header"><span class="data-table-title">Webex Users</span></div>
-          <div id="tbl-users"><p class="empty-msg">No records yet.</p></div>
+          <div id="tbl-users"><table class="data-table">
+    <thead><tr><th>Email</th><th>First Name</th><th>Last Name</th><th>Extension</th><th>Phone</th><th>Location</th><th>Voicemail</th><th>Recording</th><th></th></tr></thead>
+    <tbody><tr><td title="amorales@veytec.com">amorales@veytec.com</td><td title="Anthony">Anthony</td><td title="Morales">Morales</td><td title="7819">7819</td><td title="4075897819">4075897819</td><td title="Veytec">Veytec</td><td title="TRUE">TRUE</td><td title="FALSE">FALSE</td>
+      <td><button class="btn-danger" onclick="deleteRecord(&#39;users&#39;,0)">✕</button></td>
+    </tr></tbody>
+  </table></div>
         </div>
       </div>
 
@@ -329,19 +357,19 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add User Device</span></div>
           <div class="form-card-body">
             <div class="grid-3">
-              <div class="field"><label>Username (Email) *</label><input id="ud-user" placeholder="archer1@farms.com" list="dl-users"/></div>
+              <div class="field"><label>Username (Email) *</label><input id="ud-user" placeholder="jdoe@veytec.com" list="dl-user-emails"></div>
               <div class="field"><label>Type</label>
                 <select id="ud-type"><option>USER</option><option>WORKSPACE</option></select></div>
               <div class="field"><label>Device Type</label>
                 <select id="ud-devtype"><option>IP</option><option>ANALOG</option></select></div>
             </div>
             <div class="grid-3" style="margin-top:10px">
-              <div class="field"><label>Model</label><input id="ud-model" placeholder="Cisco 8865"/></div>
-              <div class="field"><label>MAC Address</label><input id="ud-mac" placeholder="AB0971FA2967"/></div>
-              <div class="field"><label>Location</label><input id="ud-loc" placeholder="Dallas Office" list="dl-locations"/></div>
+              <div class="field"><label>Model</label><input id="ud-model" placeholder="Cisco 8865"></div>
+              <div class="field"><label>MAC Address</label><input id="ud-mac" placeholder="AB0971FA2967"></div>
+              <div class="field"><label>Location</label><input id="ud-loc" placeholder="Dallas Office" list="dl-locations"></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('userDevices')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;userDevices&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -357,21 +385,21 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add Workspace Device</span></div>
           <div class="form-card-body">
             <div class="grid-4">
-              <div class="field"><label>Workspace Name *</label><input id="wd-user" placeholder="Breakroom"/></div>
+              <div class="field"><label>Workspace Name *</label><input id="wd-user" placeholder="Breakroom"></div>
               <div class="field"><label>Type</label>
                 <select id="wd-type"><option>WORKSPACE</option></select></div>
-              <div class="field"><label>Extension</label><input id="wd-ext" placeholder="5555"/></div>
-              <div class="field"><label>Phone Number</label><input id="wd-phone" placeholder="4075551234" list="dl-phones"/></div>
+              <div class="field"><label>Extension</label><input id="wd-ext" placeholder="5555"></div>
+              <div class="field"><label>Phone Number</label><input id="wd-phone" placeholder="4075551234" list="dl-phones"></div>
             </div>
             <div class="grid-4" style="margin-top:10px">
               <div class="field"><label>Device Type</label>
                 <select id="wd-devtype"><option>IP</option><option>ANALOG</option></select></div>
-              <div class="field"><label>Model</label><input id="wd-model" placeholder="Cisco 8865"/></div>
-              <div class="field"><label>MAC Address</label><input id="wd-mac" placeholder="AB0971FA2967"/></div>
-              <div class="field"><label>Location</label><input id="wd-loc" placeholder="Dallas Office" list="dl-locations"/></div>
+              <div class="field"><label>Model</label><input id="wd-model" placeholder="Cisco 8865"></div>
+              <div class="field"><label>MAC Address</label><input id="wd-mac" placeholder="AB0971FA2967"></div>
+              <div class="field"><label>Location</label><input id="wd-loc" placeholder="Dallas Office" list="dl-locations"></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('workspaceDevices')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;workspaceDevices&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -387,17 +415,17 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add Virtual Line</span></div>
           <div class="form-card-body">
             <div class="grid-3">
-              <div class="field"><label>First Name *</label><input id="vl-first" placeholder="IT"/></div>
-              <div class="field"><label>Last Name</label><input id="vl-last" placeholder="Help Desk"/></div>
-              <div class="field"><label>Display Name</label><input id="vl-display" placeholder="IT Helpdesk"/></div>
+              <div class="field"><label>First Name *</label><input id="vl-first" placeholder="IT"></div>
+              <div class="field"><label>Last Name</label><input id="vl-last" placeholder="Help Desk"></div>
+              <div class="field"><label>Display Name</label><input id="vl-display" placeholder="IT Helpdesk"></div>
             </div>
             <div class="grid-3" style="margin-top:10px">
-              <div class="field"><label>Location</label><input id="vl-loc" placeholder="Seattle" list="dl-locations"/></div>
-              <div class="field"><label>Phone Number</label><input id="vl-phone" placeholder="14085550103" list="dl-phones"/></div>
-              <div class="field"><label>Extension</label><input id="vl-ext" placeholder="4103"/></div>
+              <div class="field"><label>Location</label><input id="vl-loc" placeholder="Seattle" list="dl-locations"></div>
+              <div class="field"><label>Phone Number</label><input id="vl-phone" placeholder="14085550103" list="dl-phones"></div>
+              <div class="field"><label>Extension</label><input id="vl-ext" placeholder="4103"></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('virtualLines')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;virtualLines&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -413,19 +441,19 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add Analog Device</span></div>
           <div class="form-card-body">
             <div class="grid-4">
-              <div class="field"><label>Description</label><input id="ad-desc" placeholder="Front Desk Fax"/></div>
-              <div class="field"><label>Directory Number</label><input id="ad-dn" placeholder="1001"/></div>
-              <div class="field"><label>Phone Number</label><input id="ad-phone" placeholder="4075551234" list="dl-phones"/></div>
-              <div class="field"><label>Location</label><input id="ad-loc" placeholder="HQ" list="dl-locations"/></div>
+              <div class="field"><label>Description</label><input id="ad-desc" placeholder="Front Desk Fax"></div>
+              <div class="field"><label>Directory Number</label><input id="ad-dn" placeholder="1001"></div>
+              <div class="field"><label>Phone Number</label><input id="ad-phone" placeholder="4075551234" list="dl-phones"></div>
+              <div class="field"><label>Location</label><input id="ad-loc" placeholder="HQ" list="dl-locations"></div>
             </div>
             <div class="grid-3" style="margin-top:10px">
               <div class="field"><label>Device Type</label>
                 <select id="ad-type"><option>ATA</option><option>FAX</option><option>PHONE</option><option>OTHER</option></select></div>
-              <div class="field"><label>MAC Address</label><input id="ad-mac" placeholder="AA:BB:CC:DD:EE:FF"/></div>
-              <div class="field"><label>Port Number</label><input id="ad-port" placeholder="1"/></div>
+              <div class="field"><label>MAC Address</label><input id="ad-mac" placeholder="AA:BB:CC:DD:EE:FF"></div>
+              <div class="field"><label>Port Number</label><input id="ad-port" placeholder="1"></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('analogDevices')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;analogDevices&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -442,10 +470,10 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-body">
             <div class="section-divider">Basic</div>
             <div class="grid-4">
-              <div class="field"><label>Name *</label><input id="hg-name" placeholder="HR DEPT HUNTGROUP"/></div>
-              <div class="field"><label>Phone Number</label><input id="hg-phone" placeholder="4078743451" list="dl-phones"/></div>
-              <div class="field"><label>Extension</label><input id="hg-ext" placeholder="3451"/></div>
-              <div class="field"><label>Location</label><input id="hg-loc" placeholder="Headquarters" list="dl-locations"/></div>
+              <div class="field"><label>Name *</label><input id="hg-name" placeholder="HR DEPT HUNTGROUP"></div>
+              <div class="field"><label>Phone Number</label><input id="hg-phone" placeholder="4078743451" list="dl-phones"></div>
+              <div class="field"><label>Extension</label><input id="hg-ext" placeholder="3451"></div>
+              <div class="field"><label>Location</label><input id="hg-loc" placeholder="Headquarters" list="dl-locations"></div>
             </div>
             <div class="grid-2" style="margin-top:10px">
               <div class="field"><label>Call Routing Pattern</label>
@@ -456,42 +484,43 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
               <div class="field"><label>Agent Action</label>
                 <select id="hg-agentaction"><option>ADD</option><option>REMOVE</option></select></div>
             </div>
-            <div class="section-divider">Forwarding & Divert</div>
+            <div class="section-divider">Forwarding &amp; Divert</div>
             <div class="grid-4">
               <div class="field"><label>Fwd After Rings VM Enable</label>
                 <select id="hg-farmve"><option></option><option>TRUE</option><option>FALSE</option></select></div>
-              <div class="field"><label>Forward Number</label><input id="hg-fwdnum" placeholder=""/></div>
+              <div class="field"><label>Forward Number</label><input id="hg-fwdnum" placeholder=""></div>
               <div class="field"><label>Advance After Rings Enable</label>
                 <select id="hg-aarne"><option></option><option>TRUE</option><option>FALSE</option></select></div>
-              <div class="field"><label>Advance After # Rings</label><input id="hg-aar" placeholder=""/></div>
+              <div class="field"><label>Advance After # Rings</label><input id="hg-aar" placeholder=""></div>
             </div>
             <div class="grid-4" style="margin-top:10px">
               <div class="field"><label>Advance When Busy Enable</label>
                 <select id="hg-awbe"><option></option><option>TRUE</option><option>FALSE</option></select></div>
               <div class="field"><label>Fwd After Rings Enable</label>
                 <select id="hg-fare"><option></option><option>TRUE</option><option>FALSE</option></select></div>
-              <div class="field"><label>Forward After Rings</label><input id="hg-far" placeholder=""/></div>
-              <div class="field"><label>Forward Number 2</label><input id="hg-fwdnum2" placeholder=""/></div>
+              <div class="field"><label>Forward After Rings</label><input id="hg-far" placeholder=""></div>
+              <div class="field"><label>Forward Number 2</label><input id="hg-fwdnum2" placeholder=""></div>
             </div>
             <div class="grid-4" style="margin-top:10px">
               <div class="field"><label>Hunt Group Busy Enable</label>
                 <select id="hg-hgbe"><option></option><option>TRUE</option><option>FALSE</option></select></div>
               <div class="field"><label>Divert When Busy Enable</label>
                 <select id="hg-dwbe"><option></option><option>TRUE</option><option>FALSE</option></select></div>
-              <div class="field"><label>Divert When Busy Number</label><input id="hg-dwbn" placeholder=""/></div>
+              <div class="field"><label>Divert When Busy Number</label><input id="hg-dwbn" placeholder=""></div>
               <div class="field"><label>Divert Busy VM Enable</label>
                 <select id="hg-dbvme"><option></option><option>TRUE</option><option>FALSE</option></select></div>
             </div>
             <div class="grid-2" style="margin-top:10px">
               <div class="field"><label>Divert When Unreachable Enable</label>
                 <select id="hg-dwue"><option></option><option>TRUE</option><option>FALSE</option></select></div>
-              <div class="field"><label>Divert When Unreachable Number</label><input id="hg-dwun" placeholder=""/></div>
+              <div class="field"><label>Divert When Unreachable Number</label><input id="hg-dwun" placeholder=""></div>
             </div>
             <div class="section-divider">Agents (Email IDs)</div>
-            <div class="agents-area" id="hg-agents"></div>
-            <button class="add-agent-btn" onclick="addAgentRow('hg-agents')">+ Add Agent</button>
+            <div class="agents-area" id="hg-agents"><div class="agent-row"><input placeholder="email@company.com or workspace name" list="dl-agents">
+    <button class="btn-icon btn-icon-rem" title="Remove" onclick="this.parentElement.remove()">✕</button></div></div>
+            <button class="add-agent-btn" onclick="addAgentRow(&#39;hg-agents&#39;)">+ Add Agent</button>
             <div style="margin-top:14px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('huntGroup')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;huntGroup&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -508,16 +537,16 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-body">
             <div class="section-divider">Basic</div>
             <div class="grid-4">
-              <div class="field"><label>Name *</label><input id="aa-name" placeholder="Main Menu"/></div>
-              <div class="field"><label>Phone Number</label><input id="aa-phone" placeholder="4075895441" list="dl-phones"/></div>
-              <div class="field"><label>Extension</label><input id="aa-ext" placeholder="4535"/></div>
-              <div class="field"><label>Location</label><input id="aa-loc" placeholder="HQ" list="dl-locations"/></div>
+              <div class="field"><label>Name *</label><input id="aa-name" placeholder="Main Menu"></div>
+              <div class="field"><label>Phone Number</label><input id="aa-phone" placeholder="4075895441" list="dl-phones"></div>
+              <div class="field"><label>Extension</label><input id="aa-ext" placeholder="4535"></div>
+              <div class="field"><label>Location</label><input id="aa-loc" placeholder="HQ" list="dl-locations"></div>
             </div>
             <div class="grid-4" style="margin-top:10px">
-              <div class="field"><label>Business Schedule</label><input id="aa-bsched" placeholder="Business Hours 1"/></div>
-              <div class="field"><label>Holiday Schedule</label><input id="aa-hsched" placeholder="Holidays"/></div>
-              <div class="field"><label>Alternate Number 1</label><input id="aa-alt1" placeholder=""/></div>
-              <div class="field"><label>Alternate Number 2</label><input id="aa-alt2" placeholder=""/></div>
+              <div class="field"><label>Business Schedule</label><input id="aa-bsched" placeholder="Business Hours 1"></div>
+              <div class="field"><label>Holiday Schedule</label><input id="aa-hsched" placeholder="Holidays"></div>
+              <div class="field"><label>Alternate Number 1</label><input id="aa-alt1" placeholder=""></div>
+              <div class="field"><label>Alternate Number 2</label><input id="aa-alt2" placeholder=""></div>
             </div>
             <div class="grid-2" style="margin-top:10px">
               <div class="field"><label>Business Hours Menu Extension Enabled</label>
@@ -530,14 +559,14 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
             <div class="grid-2">
               <div class="field"><label>Greeting Type</label>
                 <select id="aa-bgt"><option>CUSTOM</option><option>DEFAULT</option><option>SYSTEM_DEFAULT</option></select></div>
-              <div class="field"><label>Announcement Name</label><input id="aa-ban" placeholder="MainMenuOptions.wav"/></div>
+              <div class="field"><label>Announcement Name</label><input id="aa-ban" placeholder="MainMenuOptions.wav"></div>
             </div>
 
             <div class="section-divider">After Hours Greeting</div>
             <div class="grid-3">
               <div class="field"><label>Greeting Type</label>
                 <select id="aa-ahgt"><option>CUSTOM</option><option>DEFAULT</option><option>SYSTEM_DEFAULT</option></select></div>
-              <div class="field"><label>Announcement Name</label><input id="aa-ahan" placeholder="AfterHoursMenu.wav"/></div>
+              <div class="field"><label>Announcement Name</label><input id="aa-ahan" placeholder="AfterHoursMenu.wav"></div>
               <div class="field"><label>Media Type</label>
                 <select id="aa-ahamt"><option>WAV</option><option>MP3</option></select></div>
             </div>
@@ -546,7 +575,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
             <div class="grid-4">
               <div class="field"><label>Retry (No Input)</label>
                 <select id="aa-bret"><option>NO_REPEAT</option><option>ONE_TIME</option><option>TWO_TIMES</option><option>THREE_TIMES</option></select></div>
-              <div class="field"><label>No Input Timer (sec)</label><input id="aa-btimer" placeholder="10"/></div>
+              <div class="field"><label>No Input Timer (sec)</label><input id="aa-btimer" placeholder="10"></div>
               <div class="field"><label>Action</label>
                 <select id="aa-bact">
                   <option>PLAY_MESSAGE_AND_DISCONNECT</option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option>
@@ -560,7 +589,7 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
             <div class="grid-4">
               <div class="field"><label>Retry (No Input)</label>
                 <select id="aa-ahret"><option>NO_REPEAT</option><option>ONE_TIME</option><option>TWO_TIMES</option><option>THREE_TIMES</option></select></div>
-              <div class="field"><label>No Input Timer (sec)</label><input id="aa-ahtimer" placeholder="10"/></div>
+              <div class="field"><label>No Input Timer (sec)</label><input id="aa-ahtimer" placeholder="10"></div>
               <div class="field"><label>Action</label>
                 <select id="aa-ahact">
                   <option>PLAY_MESSAGE_AND_DISCONNECT</option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option>
@@ -572,16 +601,140 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
 
             <div class="section-divider">Business Hours Key Press Menu</div>
             <div style="overflow-x:auto">
-              <table class="key-table" id="aa-bkeys"></table>
+              <table class="key-table" id="aa-bkeys"><thead><tr>
+    <th>Key</th><th style="width:280px">Description</th><th style="width:220px">Action</th><th style="width:150px">Value / Ext</th>
+  </tr></thead><tbody><tr>
+      <td><span class="key-badge-sm">0</span></td>
+      <td><input id="bh-desc-0" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-0"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-0" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">1</span></td>
+      <td><input id="bh-desc-1" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-1"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-1" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">2</span></td>
+      <td><input id="bh-desc-2" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-2"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-2" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">3</span></td>
+      <td><input id="bh-desc-3" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-3"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-3" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">4</span></td>
+      <td><input id="bh-desc-4" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-4"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-4" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">5</span></td>
+      <td><input id="bh-desc-5" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-5"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-5" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">6</span></td>
+      <td><input id="bh-desc-6" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-6"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-6" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">7</span></td>
+      <td><input id="bh-desc-7" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-7"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-7" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">8</span></td>
+      <td><input id="bh-desc-8" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-8"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-8" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">9</span></td>
+      <td><input id="bh-desc-9" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-9"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-9" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">*</span></td>
+      <td><input id="bh-desc-*" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-*"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-*" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">#</span></td>
+      <td><input id="bh-desc-#" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="bh-act-#"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="bh-val-#" placeholder="e.g. 5555"></td>
+    </tr></tbody></table>
             </div>
 
             <div class="section-divider">After Hours Key Press Menu</div>
             <div style="overflow-x:auto">
-              <table class="key-table" id="aa-ahkeys"></table>
+              <table class="key-table" id="aa-ahkeys"><thead><tr>
+    <th>Key</th><th style="width:280px">Description</th><th style="width:220px">Action</th><th style="width:150px">Value / Ext</th>
+  </tr></thead><tbody><tr>
+      <td><span class="key-badge-sm">0</span></td>
+      <td><input id="ah-desc-0" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-0"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-0" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">1</span></td>
+      <td><input id="ah-desc-1" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-1"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-1" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">2</span></td>
+      <td><input id="ah-desc-2" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-2"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-2" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">3</span></td>
+      <td><input id="ah-desc-3" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-3"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-3" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">4</span></td>
+      <td><input id="ah-desc-4" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-4"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-4" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">5</span></td>
+      <td><input id="ah-desc-5" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-5"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-5" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">6</span></td>
+      <td><input id="ah-desc-6" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-6"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-6" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">7</span></td>
+      <td><input id="ah-desc-7" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-7"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-7" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">8</span></td>
+      <td><input id="ah-desc-8" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-8"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-8" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">9</span></td>
+      <td><input id="ah-desc-9" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-9"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-9" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">*</span></td>
+      <td><input id="ah-desc-*" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-*"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-*" placeholder="e.g. 5555"></td>
+    </tr><tr>
+      <td><span class="key-badge-sm">#</span></td>
+      <td><input id="ah-desc-#" placeholder="e.g. Transfer to Sales"></td>
+      <td><select id="ah-act-#"><option></option><option>TRANSFER_WITH_PROMPT</option><option>TRANSFER_WITHOUT_PROMPT</option><option>TRANSFER_TO_OPERATOR</option><option>TRANSFER_TO_MAILBOX</option><option>EXTENSION_DIALING</option><option>NAME_DIALING</option><option>PLAY_ANNOUNCEMENT</option><option>REPEAT_MENU</option><option>EXIT</option><option>DISCONNECT</option></select></td>
+      <td><input id="ah-val-#" placeholder="e.g. 5555"></td>
+    </tr></tbody></table>
             </div>
 
             <div style="margin-top:14px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('autoAttendant')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;autoAttendant&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -597,12 +750,12 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add Call Park Extension</span></div>
           <div class="form-card-body">
             <div class="grid-3">
-              <div class="field"><label>Location</label><input id="cpe-loc" placeholder="ORLANDO" list="dl-locations"/></div>
-              <div class="field"><label>Call Park Extension Name *</label><input id="cpe-name" placeholder="Front Desk Line 1"/></div>
-              <div class="field"><label>Extension</label><input id="cpe-ext" placeholder="1001"/></div>
+              <div class="field"><label>Location</label><input id="cpe-loc" placeholder="ORLANDO" list="dl-locations"></div>
+              <div class="field"><label>Call Park Extension Name *</label><input id="cpe-name" placeholder="Front Desk Line 1"></div>
+              <div class="field"><label>Extension</label><input id="cpe-ext" placeholder="1001"></div>
             </div>
             <div style="margin-top:12px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('callParkExt')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;callParkExt&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -618,23 +771,24 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add Call Park Group</span></div>
           <div class="form-card-body">
             <div class="grid-4">
-              <div class="field"><label>Call Park Name *</label><input id="cpg-name" placeholder="Csv_CallPark_A"/></div>
-              <div class="field"><label>Location Name</label><input id="cpg-loc" placeholder="ORLANDO" list="dl-locations"/></div>
+              <div class="field"><label>Call Park Name *</label><input id="cpg-name" placeholder="Csv_CallPark_A"></div>
+              <div class="field"><label>Location Name</label><input id="cpg-loc" placeholder="Veytec" list="dl-locations"></div>
               <div class="field"><label>Recall To</label>
                 <select id="cpg-recall">
                   <option>ALERT PARKING USER ONLY</option><option>ALERT PARKING USER FIRST THEN HUNT GROUP</option>
                 </select></div>
-              <div class="field"><label>Hunt Group Name</label><input id="cpg-hg" placeholder="" list="dl-huntgroups"/></div>
+              <div class="field"><label>Hunt Group Name</label><input id="cpg-hg" placeholder="" list="dl-huntgroups"></div>
             </div>
             <div class="grid-2" style="margin-top:10px">
               <div class="field"><label>Member Action</label>
                 <select id="cpg-action"><option>ADD</option><option>REMOVE</option></select></div>
             </div>
             <div class="section-divider">Members (Email or Workspace Name)</div>
-            <div class="agents-area" id="cpg-agents"></div>
-            <button class="add-agent-btn" onclick="addAgentRow('cpg-agents')">+ Add Member</button>
+            <div class="agents-area" id="cpg-agents"><div class="agent-row"><input placeholder="email@company.com or workspace name" list="dl-agents">
+    <button class="btn-icon btn-icon-rem" title="Remove" onclick="this.parentElement.remove()">✕</button></div></div>
+            <button class="add-agent-btn" onclick="addAgentRow(&#39;cpg-agents&#39;)">+ Add Member</button>
             <div style="margin-top:14px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('callParkGroup')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;callParkGroup&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -650,21 +804,22 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
           <div class="form-card-header"><span class="form-card-title">Add Call Pickup Group</span></div>
           <div class="form-card-body">
             <div class="grid-4">
-              <div class="field"><label>Name *</label><input id="cp-name" placeholder="Csv_Callpickup_A"/></div>
-              <div class="field"><label>Location</label><input id="cp-loc" placeholder="ORLANDO" list="dl-locations"/></div>
+              <div class="field"><label>Name *</label><input id="cp-name" placeholder="Csv_Callpickup_A"></div>
+              <div class="field"><label>Location</label><input id="cp-loc" placeholder="Veytec" list="dl-locations"></div>
               <div class="field"><label>Notification Type</label>
                 <select id="cp-notif"><option>VISUAL</option><option>AUDIO</option><option>BOTH</option><option>NONE</option></select></div>
-              <div class="field"><label>Notification Delay (sec)</label><input id="cp-delay" placeholder="6"/></div>
+              <div class="field"><label>Notification Delay (sec)</label><input id="cp-delay" placeholder="6"></div>
             </div>
             <div class="grid-2" style="margin-top:10px">
               <div class="field"><label>Agent Action</label>
                 <select id="cp-action"><option>ADD</option><option>REMOVE</option></select></div>
             </div>
             <div class="section-divider">Members (Email or Workspace Name)</div>
-            <div class="agents-area" id="cp-agents"></div>
-            <button class="add-agent-btn" onclick="addAgentRow('cp-agents')">+ Add Member</button>
+            <div class="agents-area" id="cp-agents"><div class="agent-row"><input placeholder="email@company.com or workspace name" list="dl-agents">
+    <button class="btn-icon btn-icon-rem" title="Remove" onclick="this.parentElement.remove()">✕</button></div></div>
+            <button class="add-agent-btn" onclick="addAgentRow(&#39;cp-agents&#39;)">+ Add Member</button>
             <div style="margin-top:14px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('callPickup')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;callPickup&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -675,27 +830,29 @@ body{font-family:system-ui,-apple-system,sans-serif;background:#f0f4f8;height:10
       </div>
 
       <!-- ==================== PAGING ==================== -->
-      <div class="sheet-panel" id="panel-paging">
+      <div class="sheet-panel active" id="panel-paging">
         <div class="form-card">
           <div class="form-card-header"><span class="form-card-title">Add Paging Group</span></div>
           <div class="form-card-body">
             <div class="grid-4">
-              <div class="field"><label>Location</label><input id="pg-loc" placeholder="HQ" list="dl-locations"/></div>
-              <div class="field"><label>Paging Group Name *</label><input id="pg-name" placeholder="Front Door"/></div>
-              <div class="field"><label>Phone Number</label><input id="pg-phone" placeholder="" list="dl-phones"/></div>
-              <div class="field"><label>Extension</label><input id="pg-ext" placeholder="6500"/></div>
+              <div class="field"><label>Location</label><input id="pg-loc" placeholder="HQ" list="dl-locations"></div>
+              <div class="field"><label>Paging Group Name *</label><input id="pg-name" placeholder="Front Door"></div>
+              <div class="field"><label>Phone Number</label><input id="pg-phone" placeholder="" list="dl-phones"></div>
+              <div class="field"><label>Extension</label><input id="pg-ext" placeholder="6500"></div>
             </div>
             <div class="grid-2" style="margin-top:10px">
-              <div class="field"><label>Calling ID Label</label><input id="pg-label" placeholder="Page Originator"/></div>
+              <div class="field"><label>Calling ID Label</label><input id="pg-label" placeholder="Page Originator"></div>
             </div>
             <div class="section-divider">Paging Targets</div>
-            <div class="agents-area" id="pg-targets"></div>
-            <button class="add-agent-btn" onclick="addAgentRow('pg-targets')">+ Add Target</button>
+            <div class="agents-area" id="pg-targets"><div class="agent-row"><input placeholder="email@company.com or workspace name" list="dl-agents">
+    <button class="btn-icon btn-icon-rem" title="Remove" onclick="this.parentElement.remove()">✕</button></div></div>
+            <button class="add-agent-btn" onclick="addAgentRow(&#39;pg-targets&#39;)">+ Add Target</button>
             <div class="section-divider" style="margin-top:14px">Paging Originators</div>
-            <div class="agents-area" id="pg-origins"></div>
-            <button class="add-agent-btn" onclick="addAgentRow('pg-origins')">+ Add Originator</button>
+            <div class="agents-area" id="pg-origins"><div class="agent-row"><input placeholder="email@company.com or workspace name" list="dl-agents">
+    <button class="btn-icon btn-icon-rem" title="Remove" onclick="this.parentElement.remove()">✕</button></div></div>
+            <button class="add-agent-btn" onclick="addAgentRow(&#39;pg-origins&#39;)">+ Add Originator</button>
             <div style="margin-top:14px;display:flex;justify-content:flex-end">
-              <button class="btn-add" onclick="addRecord('paging')">+ Add to Table</button>
+              <button class="btn-add" onclick="addRecord(&#39;paging&#39;)">+ Add to Table</button>
             </div>
           </div>
         </div>
@@ -739,6 +896,8 @@ const KEY_PRESS_KEYS = ['0','1','2','3','4','5','6','7','8','9','*','#'];
 const AA_ACTIONS = ['','TRANSFER_WITH_PROMPT','TRANSFER_WITHOUT_PROMPT','TRANSFER_TO_OPERATOR',
   'TRANSFER_TO_MAILBOX','EXTENSION_DIALING','NAME_DIALING','PLAY_ANNOUNCEMENT','REPEAT_MENU','EXIT','DISCONNECT'];
 
+const LS_KEY = 'webex-data-v5';
+
 // ======================== INIT ========================
 function init(){
   buildKeyTable('aa-bkeys','bh');
@@ -748,13 +907,63 @@ function init(){
   addAgentRow('cp-agents');
   addAgentRow('pg-targets');
   addAgentRow('pg-origins');
-  // Restore previous session from this browser, if any
-  if(loadLocal()){
-    Object.keys(DB).forEach(s=>{ renderTable(s); updateBadge(s); });
-    const total = Object.values(DB).reduce((n,arr)=>n+arr.length,0);
-    if(total>0) showToast(`Restored ${total} record${total!==1?'s':''} from this browser.`);
-  }
-  refreshDatalists();
+  loadFromLocalStorage();
+}
+
+// ======================== LOCAL STORAGE ========================
+function saveToLocalStorage(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch(e){}
+}
+
+function loadFromLocalStorage(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(!raw) return;
+    const saved = JSON.parse(raw);
+    let total = 0;
+    Object.keys(DB).forEach(sheet=>{
+      if(Array.isArray(saved[sheet]) && saved[sheet].length){
+        DB[sheet] = saved[sheet];
+        renderTable(sheet);
+        updateBadge(sheet);
+        total += saved[sheet].length;
+      }
+    });
+    if(total) showToast('Restored '+total+' saved records from browser','💾','#1e3a5f');
+    updateDataLists();
+  } catch(e){}
+}
+
+function clearAll(){
+  if(!confirm('Clear ALL data from every sheet? This cannot be undone.')) return;
+  Object.keys(DB).forEach(sheet=>{
+    DB[sheet]=[];
+    renderTable(sheet);
+    updateBadge(sheet);
+  });
+  try{ localStorage.removeItem(LS_KEY); } catch(e){}
+  updateDataLists();
+  showToast('All data cleared','🗑','#dc2626');
+}
+
+// ======================== AUTOCOMPLETE DATALISTS ========================
+function updateDataLists(){
+  setDL('dl-locations',   [...new Set(DB.location.map(r=>r.name).filter(Boolean))]);
+  setDL('dl-phones',      [...new Set([
+    ...DB.phoneNumbers.map(r=>r.number),
+    ...DB.location.map(r=>r.mainNumber),
+  ].filter(Boolean))]);
+  setDL('dl-agents',      [...new Set([
+    ...DB.users.map(r=>r.email),
+    ...DB.workspaceDevices.map(r=>r.user),
+  ].filter(Boolean))]);
+  setDL('dl-user-emails', [...new Set(DB.users.map(r=>r.email).filter(Boolean))]);
+  setDL('dl-huntgroups',  [...new Set(DB.huntGroup.map(r=>r.name).filter(Boolean))]);
+}
+
+function setDL(id, values){
+  const dl = document.getElementById(id);
+  if(dl) dl.innerHTML = values.map(v=>`<option value="${v.replace(/"/g,'&quot;')}"></option>`).join('');
 }
 
 function buildKeyTable(tableId, prefix){
@@ -771,12 +980,11 @@ function buildKeyTable(tableId, prefix){
   }</tbody>`;
 }
 
-function addAgentRow(containerId, prefill){
+function addAgentRow(containerId){
   const c = document.getElementById(containerId);
   const row = document.createElement('div');
   row.className='agent-row';
-  const val = prefill ? `value="${esc(prefill)}"` : '';
-  row.innerHTML=`<input list="dl-users-workspaces" ${val} placeholder="email@company.com or workspace name"/>
+  row.innerHTML=`<input placeholder="email@company.com or workspace name" list="dl-agents"/>
     <button class="btn-icon btn-icon-rem" title="Remove" onclick="this.parentElement.remove()">✕</button>`;
   c.appendChild(row);
 }
@@ -822,10 +1030,21 @@ function addRecord(sheet){
       clearIds(['loc-name','loc-addr','loc-city','loc-state','loc-zip','loc-main','loc-ecbn','loc-email']);
       break;
     case 'phoneNumbers':
-      if(!v('pn-number')){alert('Number is required');return;}
-      rec={number:v('pn-number'),location:v('pn-location')};
+      const pnRaw = v('pn-number');
+      if(!pnRaw){alert('Number is required');return;}
+      const location = v('pn-location');
+      const numbers = pnRaw.split(',').map(n=>n.trim()).filter(Boolean);
+      if(!numbers.length){alert('Please enter at least one valid number');return;}
+      numbers.forEach(num=>{
+        DB['phoneNumbers'].push({number:num, location:location});
+      });
       clearIds(['pn-number','pn-location']);
-      break;
+      renderTable('phoneNumbers');
+      updateBadge('phoneNumbers');
+      saveToLocalStorage();
+      updateDataLists();
+      showToast('Added '+numbers.length+' phone number'+(numbers.length!==1?'s':''),'✓','#16a34a');
+      return;
     case 'users':
       if(!v('u-email')){alert('Email is required');return;}
       rec={first:v('u-first'),last:v('u-last'),display:v('u-display'),email:v('u-email'),
@@ -926,8 +1145,8 @@ function addRecord(sheet){
   DB[sheet].push(rec);
   renderTable(sheet);
   updateBadge(sheet);
-  refreshDatalists();
-  saveLocal();
+  saveToLocalStorage();
+  updateDataLists();
 }
 
 function clearIds(ids){ ids.forEach(id=>{const el=document.getElementById(id);if(el)el.value='';}); }
@@ -987,8 +1206,8 @@ function deleteRecord(sheet, idx){
   DB[sheet].splice(idx,1);
   renderTable(sheet);
   updateBadge(sheet);
-  refreshDatalists();
-  saveLocal();
+  saveToLocalStorage();
+  updateDataLists();
 }
 
 function esc(v){ return (v||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
@@ -1088,291 +1307,99 @@ function downloadCSV(filename, csv){
 
 function exportCurrent(){
   const sheet = currentSheet;
+  if(!DB[sheet].length){ showToast('No records to export on this sheet','⚠','#d97706'); return; }
   downloadCSV(SHEET_META[sheet].title.replace(/[\s/]+/g,'_')+'.csv', buildCSV(sheet));
   const btn = document.getElementById('sh-export-btn');
-  btn.textContent='✓ Exported!'; btn.style.color='#16a34a';
-  setTimeout(()=>{btn.textContent='⬇ Export CSV'; btn.style.color='';},2000);
+  btn.textContent='✓ CSV'; btn.style.color='#16a34a';
+  setTimeout(()=>{btn.textContent='⬇ CSV'; btn.style.color='';},2000);
+  showToast(`Exported "${SHEET_META[sheet].title}" as CSV`,'⬇','#1e3a5f');
+}
+
+function exportCurrentJSON(){
+  const sheet = currentSheet;
+  if(!DB[sheet].length){ showToast('No records to export on this sheet','⚠','#d97706'); return; }
+  const payload = { _meta:{ sheet, savedAt: new Date().toISOString() }, data: { [sheet]: DB[sheet] } };
+  const blob = new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href=url; a.download=SHEET_META[sheet].title.replace(/[\s/]+/g,'_')+'.json'; a.click();
+  URL.revokeObjectURL(url);
+  const btn = document.getElementById('sh-export-json-btn');
+  btn.textContent='✓ JSON'; btn.style.color='#16a34a';
+  setTimeout(()=>{btn.textContent='⬇ JSON'; btn.style.color='';},2000);
+  showToast(`Exported "${SHEET_META[sheet].title}" as JSON`,'⬇','#1e3a5f');
 }
 
 function exportAll(){
-  Object.keys(DB).forEach((sheet,i)=>{
-    if(DB[sheet].length>0){
-      setTimeout(()=>downloadCSV(SHEET_META[sheet].title.replace(/[\s/]+/g,'_')+'.csv', buildCSV(sheet)), i*200);
-    }
+  const sheets = Object.keys(DB).filter(s=>DB[s].length>0);
+  if(!sheets.length){ showToast('No data entered yet across any sheet','⚠','#d97706'); return; }
+  sheets.forEach((sheet,i)=>{
+    setTimeout(()=>downloadCSV(SHEET_META[sheet].title.replace(/[\s/]+/g,'_')+'.csv', buildCSV(sheet)), i*200);
   });
-}
-
-// ======================== CROSS-REFERENCE DATALISTS ========================
-function setDatalist(id, values){
-  const dl = document.getElementById(id);
-  // Dedupe + sort + drop blanks
-  const uniq = [...new Set(values.filter(v=>v && String(v).trim()))].sort();
-  dl.innerHTML = uniq.map(v=>`<option value="${esc(v)}"></option>`).join('');
-}
-function refreshDatalists(){
-  setDatalist('dl-locations',  DB.location.map(r=>r.name));
-  // Phone numbers come from the Phone Numbers sheet plus anywhere else a number lives
-  const phones = [
-    ...DB.phoneNumbers.map(r=>r.number),
-    ...DB.location.map(r=>r.mainNumber),
-  ];
-  setDatalist('dl-phones', phones);
-  setDatalist('dl-users',       DB.users.map(r=>r.email));
-  setDatalist('dl-workspaces',  DB.workspaceDevices.map(r=>r.user));
-  setDatalist('dl-users-workspaces', [
-    ...DB.users.map(r=>r.email),
-    ...DB.workspaceDevices.map(r=>r.user),
-  ]);
-  setDatalist('dl-huntgroups',  DB.huntGroup.map(r=>r.name));
-}
-
-// ======================== LOCAL STORAGE ========================
-const LS_KEY = 'webexCallingDataCollection_v5';
-function saveLocal(){
-  try { localStorage.setItem(LS_KEY, JSON.stringify(DB)); } catch(e){ console.warn('Could not save to localStorage:', e); }
-}
-function loadLocal(){
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    if(!raw) return false;
-    const data = JSON.parse(raw);
-    Object.keys(DB).forEach(k=>{ if(Array.isArray(data[k])) DB[k] = data[k]; });
-    return true;
-  } catch(e){ console.warn('Could not load from localStorage:', e); return false; }
-}
-function clearAll(){
-  if(!confirm('Clear ALL data from every sheet?\n\nThis cannot be undone. Export your CSVs first if you want a backup.')) return;
-  Object.keys(DB).forEach(k=>{ DB[k]=[]; });
-  saveLocal();
-  Object.keys(DB).forEach(s=>{ renderTable(s); updateBadge(s); });
-  refreshDatalists();
-  showToast('All data cleared.');
+  showToast(`Exporting ${sheets.length} CSV file${sheets.length!==1?'s':''}…`,'⬇','#1e3a5f');
 }
 
 // ======================== TOAST ========================
-let toastTimer = null;
-function showToast(msg, kind){
+function showToast(msg, icon='✓', color='#16a34a'){
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = kind==='error' ? '#991b1b' : (kind==='warn' ? '#92400e' : '#1e3a5f');
-  t.style.display = 'block';
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(()=>{ t.style.display='none'; }, 4500);
+  t.innerHTML = `<span style="font-size:15px">${icon}</span> ${msg}`;
+  t.style.background = color;
+  t.style.opacity='1';
+  t.style.transform='translateX(-50%) translateY(0)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{
+    t.style.opacity='0';
+    t.style.transform='translateX(-50%) translateY(80px)';
+  }, 3000);
 }
 
-// ======================== CSV IMPORT ========================
-// Map a CSV's header signature to a sheet key. We match by the FIRST header
-// (which is unique enough across these specific exports) with a few fallbacks.
-function detectSheet(headers){
-  const h = headers.map(x=>x.trim());
-  const first = (h[0]||'').toLowerCase();
-  // Exact-set match first for max safety
-  for(const sheet of Object.keys(CSV_HEADERS)){
-    const expected = CSV_HEADERS[sheet].map(x=>x.toLowerCase());
-    if(expected.length === h.length && expected.every((c,i)=> (h[i]||'').toLowerCase() === c)) return sheet;
-  }
-  // Fallback: distinctive first-column heuristics
-  const map = {
-    'number':'phoneNumbers',
-    'first name':'users',         // also virtualLines — disambiguate by length
-    'username':'userDevices',     // userDevices has 6 cols, workspaceDevices has 8
-    'description':'analogDevices',
+// ======================== SAVE / LOAD JSON ========================
+function saveJSON(){
+  const payload = {
+    _meta:{ savedAt: new Date().toISOString(), version:'WebEx-V5' },
+    data: DB
   };
-  if(first==='name'){
-    if(h.includes('Address') || h.includes('address')) return 'location';
-    if(h.includes('Phone Number') && h.includes('Extension') && h.includes('Call Routing Pattern')) return 'huntGroup';
-    if(h.includes('Phone Number') && h.includes('Business Schedule')) return 'autoAttendant';
-    if(h.includes('Notification Type')) return 'callPickup';
-  }
-  if(first==='location'){
-    if(h.includes('Call Park Extension Name')) return 'callParkExt';
-    if(h.includes('Paging Group Name')) return 'paging';
-  }
-  if(first==='call park name') return 'callParkGroup';
-  if(first==='first name'){
-    return h.length >= 19 ? 'users' : 'virtualLines';
-  }
-  if(first==='username'){
-    return h.length === 8 ? 'workspaceDevices' : 'userDevices';
-  }
-  return map[first] || null;
+  const json = JSON.stringify(payload, null, 2);
+  const blob = new Blob([json],{type:'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const ts   = new Date().toISOString().slice(0,16).replace(/[:T]/g,'-');
+  a.href=url; a.download=`WebEx_Data_${ts}.json`; a.click();
+  URL.revokeObjectURL(url);
+  showToast('Progress saved as JSON','💾','#1e3a5f');
 }
 
-// Minimal RFC-4180-ish CSV parser. Handles quoted fields and "" escapes.
-function parseCSV(text){
-  const rows = [];
-  let row = [], field = '', inQuotes = false;
-  // Normalize line endings
-  text = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
-  for(let i=0; i<text.length; i++){
-    const c = text[i];
-    if(inQuotes){
-      if(c === '"'){
-        if(text[i+1] === '"'){ field += '"'; i++; }
-        else inQuotes = false;
-      } else field += c;
-    } else {
-      if(c === '"'){ inQuotes = true; }
-      else if(c === ','){ row.push(field); field=''; }
-      else if(c === '\n'){ row.push(field); rows.push(row); row=[]; field=''; }
-      else field += c;
-    }
-  }
-  if(field !== '' || row.length){ row.push(field); rows.push(row); }
-  // Drop fully-empty trailing rows
-  while(rows.length && rows[rows.length-1].every(v=>v==='')) rows.pop();
-  return rows;
-}
-
-// Build a record from a CSV row using the column order in CSV_HEADERS[sheet].
-function csvRowToRec(sheet, headers, values){
-  // Build a header->value object first (case/space insensitive)
-  const norm = s => (s||'').trim().toLowerCase();
-  const row = {};
-  headers.forEach((h,i)=>{ row[norm(h)] = (values[i]||'').trim(); });
-  const get = h => row[norm(h)] || '';
-
-  switch(sheet){
-    case 'location':
-      return {name:get('Name'),address:get('Address'),city:get('City'),state:get('State'),zip:get('Zip'),
-        mainNumber:get('Main Number'),ecbn:get('Emergency Callback Number'),email:get('Emergency Notification Email')};
-    case 'phoneNumbers':
-      return {number:get('NUMBER'),location:get('LOCATION')};
-    case 'users':
-      return {first:get('First Name'),last:get('Last Name'),display:get('Display Name'),email:get('User ID/Email'),
-        ext:get('Extension'),phone:get('Phone Number'),mobile:get('Mobile Number'),callerId:get('Caller ID Number'),
-        location:get('Location'),city:get('City'),address:get('Address'),zip:get('Zip/postal code'),
-        state:get('State/province'),country:get('Country'),cidName:get('Custom External Caller ID Name'),
-        vm:get('Voicemail Enabled'),ecbn:get('Emergyency Call Back Number'),rec:get('Call Recording Enabled'),
-        hotel:get('Hoteling Enabled')};
-    case 'userDevices':
-      return {user:get('Username'),type:get('Type'),devType:get('Device Type'),model:get('Model'),
-        mac:get('MAC Address'),location:get('Location')};
-    case 'workspaceDevices':
-      return {user:get('Username'),type:get('Type'),ext:get('Extension'),phone:get('Phone Number'),
-        devType:get('Device Type'),model:get('Model'),mac:get('MAC Address'),location:get('Location')};
-    case 'virtualLines':
-      return {first:get('First Name'),last:get('Last Name'),display:get('Display Name'),
-        location:get('Location'),phone:get('Phone Number'),ext:get('Extension')};
-    case 'analogDevices':
-      return {desc:get('Description'),dn:get('Directory Number'),phone:get('Phone Number'),
-        location:get('Location'),type:get('Device Type'),mac:get('Mac Address'),port:get('Port Number')};
-    case 'huntGroup': {
-      const agents = [];
-      for(let i=1;i<=10;i++){ const a = get(`Agent${i} ID`); if(a) agents.push(a); }
-      return {name:get('Name'),phone:get('Phone Number'),ext:get('Extension'),loc:get('Location'),
-        pattern:get('Call Routing Pattern'),farmve:get('Forward After Rings Voicemail Enable'),
-        fwdnum:get('Forward Number'),aarne:get('Advance After Set Number Of Rings Enable'),
-        aar:get('Advance After Set Number Of Rings'),awbe:get('Advance When Busy Enable'),
-        fare:get('Forward After Rings Enable'),far:get('Forward After Rings'),
-        fwdnum2:get('Forward Number2'),hgbe:get('Hunt Group Busy Enable'),
-        dwbe:get('Divert When Busy Enable'),dwbn:get('Divert When Busy Number'),
-        dbvme:get('Divert When Busy Voicemail Enable'),dwue:get('Divert When Unreachable Enable'),
-        dwun:get('Divert When Unreachable Number'),agentAction:get('Agent Action'),agents};
-    }
-    case 'autoAttendant': {
-      const bhKeys = {}, ahKeys = {};
-      KEY_PRESS_KEYS.forEach(k=>{
-        bhKeys[k] = {desc:get(`Business Hours Press ${k} Description`),
-                     act:get(`Business Hours Press ${k} Action`),
-                     val:get(`Business Hours Press ${k} Value`)};
-        ahKeys[k] = {desc:get(`After Hours Press ${k} Description`),
-                     act:get(`After Hours Press ${k} Action`),
-                     val:get(`After Hours Press ${k} Value`)};
+function loadJSON(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const payload = JSON.parse(e.target.result);
+      const loaded = payload.data || payload;
+      let count = 0;
+      Object.keys(DB).forEach(sheet=>{
+        if(Array.isArray(loaded[sheet])){
+          DB[sheet] = loaded[sheet];
+          renderTable(sheet);
+          updateBadge(sheet);
+          count += loaded[sheet].length;
+        }
       });
-      return {name:get('Name'),phone:get('Phone Number'),ext:get('Extension'),loc:get('Location'),
-        bsched:get('Business Schedule'),hsched:get('Holiday Schedule'),
-        bme:get('BusinessHoursMenu Extension Enabled'),ahme:get('AfterHoursMenu Extension Enabled'),
-        bgt:get('Business Hours Greeting Type'),ban:get('Business Hours Announcement Name'),
-        ahgt:get('After Hours Greeting Type'),ahan:get('After Hours Announcement Name'),
-        ahamt:get('After Hours Announcement Media Type'),
-        bret:get('Business Hours Call Treatment Retry Attempt For No Input'),
-        btimer:get('Business Hours Call Treatment No Input Timer'),
-        bact:get('Business Hours Call Treatment Action'),
-        bcgt:get('Business Hours Call Treatment Greeting Type'),
-        ahret:get('After Hours Call Treatment Retry Attempt For No Input'),
-        ahtimer:get('After Hours Call Treatment No Input Timer'),
-        ahact:get('After Hours Call Treatment Action'),
-        ahcgt:get('After Hours Call Treatment Greeting Type'),
-        bhKeys, ahKeys,
-        alt1:get('Alternate Number1'), alt2:get('Alternate Number2')};
+      saveToLocalStorage();
+      updateDataLists();
+      showToast(`Loaded ${count} records across all sheets`, '📂', '#1e3a5f');
+    } catch(err){
+      showToast('Failed to load: invalid JSON file', '✕', '#dc2626');
     }
-    case 'callParkExt':
-      return {location:get('Location'),name:get('Call Park Extension Name'),ext:get('Extension')};
-    case 'callParkGroup': {
-      const agents = [];
-      for(let i=1;i<=3;i++){ const a = get(`Agent${i} ID`); if(a) agents.push(a); }
-      return {name:get('Call Park Name'),location:get('Location Name'),recall:get('Recall To'),
-        hg:get('Hunt Group Name'),action:get('Member Action'),agents};
-    }
-    case 'callPickup': {
-      const agents = [];
-      for(let i=1;i<=3;i++){ const a = get(`Agent${i} ID`); if(a) agents.push(a); }
-      return {name:get('Name'),location:get('Location'),notif:get('Notification Type'),
-        delay:get('Notification Delay Timer In Seconds'),action:get('Agent Action'),agents};
-    }
-    case 'paging':
-      return {location:get('Location'),name:get('Paging Group Name'),phone:get('Phone Number'),
-        ext:get('Extension'),label:get('Calling ID Label'),
-        targets:get('Paging Targets').split(/\n+/).map(s=>s.trim()).filter(Boolean),
-        origins:get('Paging Originators').split(/\n+/).map(s=>s.trim()).filter(Boolean)};
-  }
-}
-
-function importOneCSV(filename, text){
-  const rows = parseCSV(text);
-  if(rows.length < 1) return {ok:false, msg:`${filename}: empty file`};
-  const headers = rows[0];
-  const sheet = detectSheet(headers);
-  if(!sheet) return {ok:false, msg:`${filename}: could not match headers to any known sheet`};
-  let added = 0;
-  for(let i=1; i<rows.length; i++){
-    const r = rows[i];
-    if(r.every(v=>!v||!v.trim())) continue; // skip blank lines
-    const rec = csvRowToRec(sheet, headers, r);
-    if(rec){ DB[sheet].push(rec); added++; }
-  }
-  return {ok:true, sheet, added};
-}
-
-function handleImport(ev){
-  const files = Array.from(ev.target.files||[]);
-  if(!files.length) return;
-  const results = [];
-  let done = 0;
-  files.forEach(file=>{
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const res = importOneCSV(file.name, reader.result);
-        results.push({file:file.name, ...res});
-      } catch(err){
-        results.push({file:file.name, ok:false, msg:err.message});
-      }
-      done++;
-      if(done === files.length){
-        // Refresh everything once at end
-        Object.keys(DB).forEach(s=>{ renderTable(s); updateBadge(s); });
-        refreshDatalists();
-        saveLocal();
-        const ok  = results.filter(r=>r.ok);
-        const bad = results.filter(r=>!r.ok);
-        const msg = (ok.length ? `Imported ${ok.length} file${ok.length!==1?'s':''} (${ok.reduce((s,r)=>s+r.added,0)} records). ` : '')
-                  + (bad.length ? `Skipped ${bad.length}: ${bad.map(r=>r.file).join(', ')}` : '');
-        showToast(msg.trim() || 'Nothing imported.', bad.length && !ok.length ? 'error' : (bad.length ? 'warn' : 'success'));
-        ev.target.value = ''; // reset so same file can be re-imported
-      }
-    };
-    reader.onerror = () => {
-      results.push({file:file.name, ok:false, msg:'read error'});
-      done++;
-    };
-    reader.readAsText(file);
-  });
+  };
+  reader.readAsText(file);
+  event.target.value = '';
 }
 
 // ======================== START ========================
 init();
 </script>
-</body>
-</html>
+
+
+</body></html>
